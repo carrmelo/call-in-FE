@@ -25,21 +25,26 @@ class Create extends Component {
 
   handleClick = (e) => {
     e.preventDefault();
-    console.log(this.state);
-    console.log('EEEE', e);
-    fetch('http://localhost:3000/events', {
-      method: 'POST',
-      body: JSON.stringify(this.state)
-    })
-    .then(response => response.json())
-    .then(data => console.log(data))
-    .catch(error => console.error(error))
+    const body = JSON.stringify(this.state);
     this.setState = ({
       title: '',
       description: '',
       startTime: null,
       endTime: null
     });
+    fetch('http://localhost:3000/events', {
+      method: 'POST',
+      body,
+      mode: 'cors',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+    })
+    .then(response => response.json())
+    .then(data => console.log(data))
+    .catch(error => console.error(error))
+
   }
 
   render() {
