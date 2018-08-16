@@ -8,9 +8,7 @@ class Create extends Component {
     this.state = {
       title: '',
       description: '',
-      startDate: null,
       startTime: null,
-      endDate: null,
       endTime: null
     };
   }
@@ -27,45 +25,52 @@ class Create extends Component {
 
   handleClick = (e) => {
     e.preventDefault();
+    console.log(this.state);
+    console.log('EEEE', e);
+    fetch('http://localhost:3000/events', {
+      method: 'POST',
+      body: JSON.stringify(this.state)
+    })
+    .then(response => response.json())
+    .then(data => console.log(data))
+    .catch(error => console.error(error))
+    this.setState = ({
+      title: '',
+      description: '',
+      startTime: null,
+      endTime: null
+    });
   }
 
   render() {
     return (
       <form className="create_form_container">
-        <label>Title:
-          <input
-            name="title"
-            type="text"
-            placeholder="Title"
-            onChange={this.handleInputChange} />
-        </label>
-        <label>Description:
-          <input
-            name="description"
-            type="text"
-            placeholder="Description"
-            onChange={this.handleInputChange} />
-        </label>
-        <label>Start:
-          <input
-            name="startDate"
-            type="date"
-            onChange={this.handleInputChange} />
-          <input
-            name="startTime"
-            type="time"
-            onChange={this.handleInputChange} />
-        </label>
-        <label>End:
-          <input
-            name="endDate"
-            type="date"
-            onChange={this.handleInputChange} />
-          <input
-            name="endTime"
-            type="time"
-            onChange={this.handleInputChange} />
-        </label>
+        <label>Title:</label>
+        <input
+          name="title"
+          type="text"
+          placeholder="Title"
+          onChange={this.handleInputChange}
+        />
+        <label>Description:</label>
+        <input
+          name="description"
+          type="text"
+          placeholder="Description"
+          onChange={this.handleInputChange}
+        />
+        <label>Start:</label>
+        <input
+          name="startTime"
+          type="datetime-local"
+          onChange={this.handleInputChange}
+        />
+        <label>End:</label>
+        <input
+          name="endTime"
+          type="datetime-local"
+          onChange={this.handleInputChange}
+        />
         <button onClick={this.handleClick}>Submit</button>
       </form>
     )

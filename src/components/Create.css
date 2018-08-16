@@ -1,5 +1,6 @@
 .create_form_container {
   display: flex;
   flex-direction: column;
-  width: 25vw;
+  width: 20vw;
+  justify-content: space-between;
 }
