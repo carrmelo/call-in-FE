@@ -27,8 +27,8 @@ class Create extends Component {
     this.setState = {
       title: "",
       description: "",
-      startTime: null,
-      endTime: null
+      startTime: new Date(),
+      endTime: new Date()
     };
     fetch("http://localhost:3000/events", {
       method: "POST",
@@ -45,6 +45,7 @@ class Create extends Component {
   };
 
   render() {
+    
     return (
       <form className="create_form_container">
         <label>Title:</label>

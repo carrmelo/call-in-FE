@@ -1,13 +1,16 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
+
 import moment from "moment";
 
-import "./EventDetail.css";
+import "./EventDetailEdit.css";
 
 class EventDetailEdit extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
+      _id: this.props.location.state._id,
       title: this.props.location.state.title,
       description: this.props.location.state.description,
       startTime: this.props.location.state.startTime,
@@ -33,35 +36,29 @@ class EventDetailEdit extends Component {
     }
   }
 
-  // handleDeleteButton = () => {
-  //   const { url } = this.props.match;
-  //   const body = JSON.stringify({ id: this.state._id });
+  handleEventEdit = () => {
+    const { _id } = this.state;
+    const body = JSON.stringify({ ...this.state });
 
-  //   fetch(`http://localhost:3000/events${url}`, {
-  //     method: "DELETE",
-  //     body,
-  //     mode: "cors",
-  //     headers: {
-  //       Accept: "application/json",
-  //       "Content-Type": "application/json"
-  //     }
-  //   })
-  //     .then(response => response.json())
-  //     .then(() => this.props.history.push("/"))
-  //     .catch(error => console.error(error));
-  // };
+    console.log(_id);
+    
+
+    fetch(`http://localhost:3000/events/${_id}`, {
+      method: "PUT",
+      body,
+      mode: "cors",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      }
+    })
+      .then(response => response.json())
+      .then(() => this.props.history.push("/"))
+      .catch(error => console.error(error));
+  };
 
   render() {
-    const { title, description, startTime, endTime } = this.state;
-
-    console.log(startTime, "2017-06-01T08:30");
-
-    const momentStartTime = moment(startTime).format("DD-MM-YYYY at HH:mm");
-    const momentEndTime = moment(endTime).format("DD-MM-YYYY at HH:mm");
-    const momentReferencialStartTime =
-      startTime < Date.now
-        ? moment(startTime).fromNow()
-        : moment(endTime).toNow();
+    const { _id, title, description, startTime, endTime } = this.state;
 
     return (
       <div className="event_detail__container">
@@ -73,7 +70,8 @@ class EventDetailEdit extends Component {
             ✖️
           </span>
         </button>
-        <div className="event_detail_text__container">
+        <h1>Edit Event</h1>
+        <div className="event_edit_input__container">
           <input
             name="title"
             type="text"
@@ -93,21 +91,23 @@ class EventDetailEdit extends Component {
             onChange={this.handleInputChange}
           />
           <input
-            name="startTime"
+            name="endTime"
             type="datetime-local"
             value={endTime.substring(0, 16)}
             onChange={this.handleInputChange}
           />
         </div>
         <div className="event_detail_buttons__container">
-          <button>
+          <Link to={`/${_id}`}>
+            <button>
+              <span role="image" aria-labelledby="delete">
+                ❌️
+              </span>
+            </button>
+          </Link>
+          <button onClick={this.handleEventEdit}>
             <span role="image" aria-labelledby="edit">
               ✅
-            </span>
-          </button>
-          <button onClick={this.handleDeleteButton}>
-            <span role="image" aria-labelledby="delete">
-              ❌️
             </span>
           </button>
         </div>
