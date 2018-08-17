@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import EventItem from "./EventItem";
 
+import './EventList.css'
+
 class EventsList extends Component {
   constructor(props) {
     super(props);
@@ -20,7 +22,8 @@ class EventsList extends Component {
   renderEventItem() {
     const { events } = this.state;
     return events.length ? (
-      events.map(event => (
+      events.sort((a, b) => a.startTime > b.startTime)
+      .map(event => (
         <EventItem key={event._id} id={event._id} title={event.title} />
       ))
     ) : (
@@ -29,7 +32,7 @@ class EventsList extends Component {
   }
 
   render() {
-    return <div>{this.renderEventItem()}</div>;
+    return <div className="event_list__container">{this.renderEventItem()}</div>;
   }
 }
 

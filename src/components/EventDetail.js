@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { Link } from 'react-router-dom';
+
 import moment from "moment";
 
 import "./EventDetail.css";
@@ -48,10 +50,10 @@ class EventDetail extends Component {
   };
 
   render() {
-    const { title, description, startTime, endTime } = this.state;
+    const { _id, title, description, startTime, endTime } = this.state;
 
-    const momentStartTime = moment(startTime).format("DD-MM-YYYY at HH:mm");
-    const momentEndTime = moment(endTime).format("DD-MM-YYYY at HH:mm");
+    const momentStartTime = moment(startTime).format("DD-MM-YYYY HH:mm");
+    const momentEndTime = moment(endTime).format("DD-MM-YYYY HH:mm");
     const momentReferencialStartTime =
       startTime < Date.now
         ? moment(startTime).fromNow()
@@ -75,11 +77,24 @@ class EventDetail extends Component {
           <p>until {momentEndTime}</p>
         </div>
         <div className="event_detail_buttons__container">
-          <button>
-            <span role="image" aria-labelledby="edit">
-              ✏️
-            </span>
-          </button>
+          <Link
+            to={{
+              pathname: `/edit/${_id}`,
+              state: {
+                _id,
+                title,
+                description,
+                startTime,
+                endTime
+              }
+            }}
+          >
+            <button>
+              <span role="image" aria-labelledby="edit">
+                ✏️
+              </span>
+            </button>
+          </Link>
           <button onClick={this.handleDeleteButton}>
             <span role="image" aria-labelledby="delete">
               🗑
