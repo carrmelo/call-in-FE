@@ -32,16 +32,15 @@ class EventDetail extends Component {
   handleDeleteButton = () => {
     const { url } = this.props.match;
     const body = JSON.stringify({ id: this.state._id });
-    console.log(body);
-    
+
     fetch(`http://localhost:3000/events${url}`, {
-      method: 'DELETE',
+      method: "DELETE",
       body,
-      mode: 'cors',
+      mode: "cors",
       headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      }
     })
       .then(response => response.json())
       .then(() => this.props.history.push("/"))
@@ -64,7 +63,9 @@ class EventDetail extends Component {
           className="event_detail__close"
           onClick={this.handleCloseButton}
         >
-        <span role="image" aria-labelledby="close">✖️</span>
+          <span role="image" aria-labelledby="close">
+            ✖️
+          </span>
         </button>
         <div className="event_detail_text__container">
           <h1>{title}</h1>
@@ -74,8 +75,16 @@ class EventDetail extends Component {
           <p>until {momentEndTime}</p>
         </div>
         <div className="event_detail_buttons__container">
-          <button><span role="image" aria-labelledby="edit">✏️</span></button>
-          <button onClick={this.handleDeleteButton}><span role="image" aria-labelledby="delete">🗑</span></button>
+          <button>
+            <span role="image" aria-labelledby="edit">
+              ✏️
+            </span>
+          </button>
+          <button onClick={this.handleDeleteButton}>
+            <span role="image" aria-labelledby="delete">
+              🗑
+            </span>
+          </button>
         </div>
       </div>
     );
