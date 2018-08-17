@@ -16,8 +16,6 @@ class Create extends Component {
   handleInputChange = (e) => {
     const value = e.target.value;
     const name = e.target.name;
-    console.log(value, 'IIIIIII', name);
-    
     this.setState({
       [name]: value
     });
@@ -65,11 +63,16 @@ class Create extends Component {
           onChange={this.handleInputChange}
         />
         <label>Start:</label>
-        <input
-          name="startTime"
-          type="datetime-local"
-          onChange={this.handleInputChange}
-        />
+        <div>
+          <input
+            name="startTime"
+            type="datetime-local"
+            onChange={this.handleInputChange}
+          />
+          <input type="checkbox" name="allDay"
+                value="allDay" />
+          <label>Todo el día</label>
+        </div>
         <label>End:</label>
         <input
           name="endTime"

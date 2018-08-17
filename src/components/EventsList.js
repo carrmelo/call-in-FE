@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import EventItem from './EventItem'
 
 class EventsList extends Component {
   constructor(props) {
@@ -12,16 +13,21 @@ class EventsList extends Component {
   componentDidMount() {
     fetch("http://localhost:3000/events")
       .then(response => response.json())
-      .then(data => {
-        console.log(data);
-        
-        this.setState({ events: data })
-      })
+      .then(data => this.setState({ events: data }))
       .catch(error => console.error(error));
   }
 
+  renderEventItem() {
+    const { events } = this.state;
+    return events.length ? (
+      events.map(event => <EventItem key={event._id} title={event.title} />)
+    ) : (
+      <div>¡Estas libre!</div>
+    );
+  }
+
   render() {
-    return <div>hola</div>;
+    return <div>{this.renderEventItem()}</div>;
   }
 }
 
