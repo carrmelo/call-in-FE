@@ -1,51 +1,50 @@
-import React, { Component } from 'react';
-import "./Create.css"
+import React, { Component } from "react";
+import "./Create.css";
 
 class Create extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props);
 
     this.state = {
-      title: '',
-      description: '',
+      title: "",
+      description: "",
       startTime: null,
       endTime: null
     };
   }
 
-  handleInputChange = (e) => {
+  handleInputChange = e => {
     const value = e.target.value;
     const name = e.target.name;
-    console.log(value, 'IIIIIII', name);
-    
+    console.log(value, "IIIIIII", name);
+
     this.setState({
       [name]: value
     });
-  }
+  };
 
-  handleClick = (e) => {
+  handleClick = e => {
     e.preventDefault();
     const body = JSON.stringify(this.state);
-    this.setState = ({
-      title: '',
-      description: '',
+    this.setState = {
+      title: "",
+      description: "",
       startTime: null,
       endTime: null
-    });
-    fetch('http://localhost:3000/events', {
-      method: 'POST',
+    };
+    fetch("http://localhost:3000/events", {
+      method: "POST",
       body,
-      mode: 'cors',
+      mode: "cors",
       headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      }
     })
-    .then(response => response.json())
-    .then(data => console.log(data))
-    .catch(error => console.error(error))
-
-  }
+      .then(response => response.json())
+      .then(data => console.log(data))
+      .catch(error => console.error(error));
+  };
 
   render() {
     return (
@@ -78,8 +77,8 @@ class Create extends Component {
         />
         <button onClick={this.handleClick}>Submit</button>
       </form>
-    )
+    );
   }
-};
+}
 
 export default Create;
