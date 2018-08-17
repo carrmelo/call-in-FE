@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import Create from './Create'
 import EventsList from './EventsList'
@@ -10,12 +10,12 @@ import './App.css';
 class App extends Component {
   render() {
     return (
-      <Router className="App">
-        <Switch>
+      <Router>
+        <div className="App">
           <Route path="/:eventId" component={EventDetail} />
           <EventsList />
           <Create />
-        </Switch>
+        </div>
       </Router>
     );
   }
