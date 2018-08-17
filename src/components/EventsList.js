@@ -20,7 +20,7 @@ class EventsList extends Component {
   renderEventItem() {
     const { events } = this.state;
     return events.length ? (
-      events.map(event => <EventItem key={event._id} title={event.title} />)
+      events.map(event => <EventItem key={event._id} id={event._id} title={event.title} />)
     ) : (
       <div>¡Estas libre!</div>
     );

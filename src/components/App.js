@@ -1,16 +1,22 @@
 import React, { Component } from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+
 import Create from './Create'
 import EventsList from './EventsList'
-// import logo from './logo.svg';
+import EventDetail from './EventDetail'
+
 import './App.css';
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <EventsList />
-        <Create />
-      </div>
+      <Router className="App">
+        <Switch>
+          <Route path="/:eventId" component={EventDetail} />
+          <EventsList />
+          <Create />
+        </Switch>
+      </Router>
     );
   }
 }

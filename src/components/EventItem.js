@@ -1,8 +1,9 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 
 class EventItem extends Component {
   render() {
-    return <div>{this.props.title}</div>;
+    return <Link to={this.props.id}>{this.props.title}</Link>;
   }
 }
 

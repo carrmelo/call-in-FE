@@ -14,19 +14,23 @@ class EventDetail extends Component {
   }
 
   componentDidMount() {
-    fetch(`http://localhost:3000/events${id}`)
+    const { url } = this.props.match
+    
+    fetch(`http://localhost:3000/events${url}`)
       .then(response => response.json())
-      .then(data => this.setState({ data }))
+      .then(data => this.setState({ ...data }))
       .catch(error => console.error(error));
   }
 
   render() {
+    console.log(this.state);
+    
     return (
       <div>
-        <h1>{this.props.title}</h1>
-        <p>{this.props.description}</p>
-        <p>{this.props.startTime}</p>
-        <p>{this.props.endTime}</p>
+        <h1>{this.state.title}</h1>
+        <p>{this.state.description}</p>
+        <p>{this.state.startTime}</p>
+        <p>{this.state.endTime}</p>
       </div>
     )
   }
