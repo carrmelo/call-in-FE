@@ -1,0 +1,5 @@
+.event_list__container {
+  display: flex;
+  flex-direction: column;
+  text-align: right;
+}
