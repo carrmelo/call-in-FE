@@ -21,7 +21,7 @@ class EventDetail extends Component {
   componentDidMount() {
     const { url } = this.props.match;
 
-    fetch(`http://localhost:3000/events${url}`)
+    fetch(`http://localhost:5000/events${url}`)
       .then(response => response.json())
       .then(data => this.setState({ ...data }))
       .catch(error => console.error(error));
@@ -35,7 +35,7 @@ class EventDetail extends Component {
     const { url } = this.props.match;
     const body = JSON.stringify({ id: this.state._id });
 
-    fetch(`http://localhost:3000/events${url}`, {
+    fetch(`http://localhost:5000/events${url}`, {
       method: "DELETE",
       body,
       mode: "cors",

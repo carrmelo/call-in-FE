@@ -13,7 +13,7 @@ class EventsList extends Component {
   }
 
   componentDidMount() {
-    fetch("http://localhost:3000/events")
+    fetch("http://localhost:5000/events")
       .then(response => response.json())
       .then(data => this.setState({ events: data }))
       .catch(error => console.error(error));

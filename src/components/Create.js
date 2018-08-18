@@ -30,7 +30,7 @@ class Create extends Component {
       startTime: null,
       endTime: null
     };
-    fetch("http://localhost:3000/events", {
+    fetch("http://localhost:5000/events", {
       method: "POST",
       body,
       mode: "cors",

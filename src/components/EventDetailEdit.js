@@ -43,7 +43,7 @@ class EventDetailEdit extends Component {
     console.log(_id);
     
 
-    fetch(`http://localhost:3000/events/${_id}`, {
+    fetch(`http://localhost:5000/events/${_id}`, {
       method: "PUT",
       body,
       mode: "cors",
