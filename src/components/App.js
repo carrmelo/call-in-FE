@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
+import { observer } from 'mobx-react';
 
 import Create from "./Create";
 import EventsList from "./EventsList";
@@ -10,6 +11,7 @@ import Selectable from './CalendarEvents';
 
 import "./App.css";
 
+@observer
 class App extends Component {
   render() {
     return (
