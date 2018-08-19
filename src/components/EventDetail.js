@@ -1,41 +1,30 @@
 import React, { Component } from 'react';
+import { inject } from 'mobx-react';
 import { Link } from 'react-router-dom';
-import { observer, inject } from 'mobx-react';
 import moment from 'moment';
 
 import './EventDetail.css';
 
+@inject('calendarStore', 'eventStore')
 class EventDetail extends Component {
-  // componentDidMount() {
-  //   const { eventId } = this.props.match.params;
+  componentDidMount() {
+    console.log(this.props);
 
-  //   this.props.calendarStore.loadEvent(eventId);
-  // }
+    const { eventId } = this.props.match.params;
+    this.props.eventStore.loadEvent(eventId);
+  }
 
   handleCloseButton = () => {
     this.props.history.push('/');
   };
 
   handleDeleteButton = () => {
-    const { url } = this.props.match;
-    const body = JSON.stringify({ id: this.state._id });
-
-    fetch(`http://localhost:5000/events${url}`, {
-      method: 'DELETE',
-      body,
-      mode: 'cors',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-      }
-    })
-      .then(response => response.json())
-      .then(() => this.props.history.push('/'))
-      .catch(error => console.error(error));
+    const { eventId } = this.props.match.params;
+    this.props.calendarStore.deleteEvent(eventId);
+    this.handleCloseButton();
   };
 
   render() {
-
     const {
       _id,
       title,
@@ -57,7 +46,7 @@ class EventDetail extends Component {
           className="event_detail__close"
           onClick={this.handleCloseButton}
         >
-          <span role="image" aria-labelledby="close">
+          <span role="img" aria-labelledby="close">
             ✖️
           </span>
         </button>
@@ -82,13 +71,13 @@ class EventDetail extends Component {
             }}
           >
             <button>
-              <span role="image" aria-labelledby="edit">
+              <span role="img" aria-labelledby="edit">
                 ✏️
               </span>
             </button>
           </Link>
           <button onClick={this.handleDeleteButton}>
-            <span role="image" aria-labelledby="delete">
+            <span role="img" aria-labelledby="delete">
               🗑
             </span>
           </button>

@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
-import moment from "moment";
-
 import "./EventDetailEdit.css";
 
 class EventDetailEdit extends Component {
@@ -66,7 +64,7 @@ class EventDetailEdit extends Component {
           className="event_detail__close"
           onClick={this.handleCloseButton}
         >
-          <span role="image" aria-labelledby="close">
+          <span role="img" aria-labelledby="close">
             ✖️
           </span>
         </button>
@@ -100,13 +98,13 @@ class EventDetailEdit extends Component {
         <div className="event_detail_buttons__container">
           <Link to={`/${_id}`}>
             <button>
-              <span role="image" aria-labelledby="delete">
+              <span role="img" aria-labelledby="delete">
                 ❌️
               </span>
             </button>
           </Link>
           <button onClick={this.handleEventEdit}>
-            <span role="image" aria-labelledby="edit">
+            <span role="img" aria-labelledby="edit">
               ✅
             </span>
           </button>

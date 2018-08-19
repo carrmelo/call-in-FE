@@ -23,25 +23,24 @@ export class CalendarStore {
       });
   }
 
-  getEvent(event_id) {
-    return { ...this.events.filter(event => event._id === event_id) };
-  }
-
   @action
-  loadEvent(id) {
-    const event = this.getEvent(id);
-    if (!event) {
-      this.isLoading = true;
-      return {
-        ...fetch(`http://localhost:5000/events/${id}`)
-          .then(response => response.json())
-          .then(action(data => (this.isLoading = false)))
-          .catch(error => {
-            this.isLoading = false;
-            console.error(error);
-          })
-      };
-    } else return event;
+  deleteEvent(id) {
+    const body = JSON.stringify({ id });
+
+    fetch(`http://localhost:5000/events/${id}`, {
+      method: 'DELETE',
+      body,
+      mode: 'cors',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(response => response.json())
+      .then(action(() => {
+        this.events.replace(this.events.filter(event => event._id !== id))
+      }))
+      .catch(error => console.error(error));
   }
 }
 
