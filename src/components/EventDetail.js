@@ -1,17 +1,34 @@
 import React, { Component } from 'react';
-import { inject } from 'mobx-react';
+import { inject, observer } from 'mobx-react';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
 
 import './EventDetail.css';
 
 @inject('calendarStore', 'eventStore')
+@observer
 class EventDetail extends Component {
+
+  componentWillMount() {
+    const { eventId } = this.props.match.params;
+    this.props.eventStore.set_id(eventId)
+  }
+
   componentDidMount() {
     console.log(this.props);
 
     const { eventId } = this.props.match.params;
     this.props.eventStore.loadEvent(eventId);
+  }
+
+  componentDidUpdate(prevProps) {
+    const { eventId } = this.props.match.params;
+    console.log('sigo aqui');
+    
+    if (eventId !== prevProps.match.params.eventId) {
+      this.props.eventStore.set_id(eventId);
+      this.props.eventStore.loadEvent(eventId);
+    }
   }
 
   handleCloseButton = () => {
@@ -25,13 +42,13 @@ class EventDetail extends Component {
   };
 
   render() {
+    const { eventId } = this.props.match.params;
     const {
-      _id,
       title,
       description,
       startTime,
       endTime
-    } = this.props.location.state;
+    } = this.props.eventStore;
 
     const momentStartTime = moment(startTime).format('DD-MM-YYYY HH:mm');
     const momentEndTime = moment(endTime).format('DD-MM-YYYY HH:mm');
@@ -60,9 +77,9 @@ class EventDetail extends Component {
         <div className="event_detail_buttons__container">
           <Link
             to={{
-              pathname: `/edit/${_id}`,
+              pathname: `/edit/${eventId}`,
               state: {
-                _id,
+                _id: eventId,
                 title,
                 description,
                 startTime,

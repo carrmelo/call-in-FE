@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { observer } from 'mobx-react';
 import DevTools from 'mobx-react-devtools';
 
@@ -18,10 +18,12 @@ class App extends Component {
       <Router>
         <div className="App">
           <DevTools />
-          <Route path="/:eventId" component={EventDetail} />
-          <Route path="/edit/:eventId" component={EventDetailEdit} />
+          <Switch>
+            <Route exact path="/:eventId" component={EventDetail} />
+            <Route exact path="/edit/:eventId?" component={EventDetailEdit} />
+          </Switch>
           <EventsList />
-          <Create />
+          {/* <Create /> */}
           <Selectable />
         </div>
       </Router>

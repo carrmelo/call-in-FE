@@ -23,6 +23,19 @@ class EventStore {
   }
 
   @action
+  set_id(event_id) {
+    if (this._id !== event_id) {
+      this.resetEvent();
+      this._id = event_id;
+    }
+  }
+
+  @action loadInitialData() {
+    if (!this._id) return this.resetEvent();
+    else return this.loadEvent(this.id);
+  }
+
+  @action
   loadEvent(id) {
     const event = this.getEvent(id);
     if (!event) {
@@ -47,19 +60,11 @@ class EventStore {
   }
 
   @action
-  set_id(event_id) {
-    if (this._id !== event_id) {
-      this.resetEvent();
-      this._id = event_id;
-    }
-  }
-
-  @action
   resetEvent() {
     this.title = '';
     this.description = '';
-    this.startTime = null;
-    this.endTime = null;
+    this.startTime = '';
+    this.endTime = '';
   }
 
   @action

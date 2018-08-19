@@ -27,7 +27,7 @@ class EventsList extends Component {
     return (
       <div className="event_list__container">
         {this.renderEventItem()}
-        <Link to={'new'}>
+        <Link to={'edit'}>
           <button>+</button>
         </Link>
       </div>
