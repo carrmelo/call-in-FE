@@ -3,9 +3,10 @@ import { Link } from "react-router-dom";
 
 class EventItem extends Component {
   render() {
+    const { event } = this.props;
     return (
-      <Link to={this.props.id}>
-        <button>{this.props.title}</button>
+      <Link to={event._id}>
+        <button>{event.title}</button>
       </Link>
     );
   }

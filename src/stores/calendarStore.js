@@ -1,26 +1,24 @@
-import { observable, computed, action } from 'mobx';
+import { observable, action } from 'mobx';
 
 export class CalendarStore {
 
-  @observable events = observable.map();
-
-  @computed get articles() {
-    return this.events.values();
-  }
+  @observable isLoading = false;
+  @observable events = [];
 
   getEvent(event_id) {
-    return this.events.get(event_id)
+    return this.events.filter(event => event._id === event_id);
   }
 
   @action loadEvents() {
+    this.isLoading = true;
     return fetch("http://localhost:5000/events")
-    .then(action(response => {
-      console.log(response);      
-      return response.json()}))
+    .then(response => response.json())
     .then(action(data => {
-      console.log(data); 
-      this.events.set(data)}))
-    .catch(error => console.error(error));
+      this.events = data
+      this.isLoading = false; }))
+    .catch(error => {
+      console.error(error);
+      this.isLoading = false; });
   }
 }
 

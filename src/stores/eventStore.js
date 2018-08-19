@@ -3,6 +3,9 @@ import { observable, action } from 'mobx';
 import calendarStore from './calendarStore';
 
 class EventStore {
+
+  @observable isLoading = false;
+
   @observable _id = '';
   @observable title = '';
   @observable description = '';
@@ -40,6 +43,7 @@ class EventStore {
   }
 
   @action submitEvent() {
+    this.isLoading = true;
     const event = {
       _id: this._id,
       title: this.title,
@@ -50,7 +54,9 @@ class EventStore {
     return (this._id
       ? calendarStore.updateEvent(event)
       : calendarStore.createEvent(event)
-    ).catch(action(err => console.error(err)));
+    ).catch(err => {
+      console.error(err);
+      this.isLoading = false; });
   }
 }
 

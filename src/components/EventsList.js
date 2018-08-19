@@ -1,38 +1,34 @@
-import React, { Component } from "react";
-import EventItem from "./EventItem";
+import React, { Component } from 'react';
+import { inject, observer } from 'mobx-react';
 
-import './EventList.css'
+import EventItem from './EventItem';
 
+import './EventList.css';
+
+@inject('calendarStore')
+@observer
 class EventsList extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      events: []
-    };
-  }
-
   componentDidMount() {
-    fetch("http://localhost:5000/events")
-      .then(response => response.json())
-      .then(data => this.setState({ events: data }))
-      .catch(error => console.error(error));
+    this.props.calendarStore.loadEvents();
   }
 
   renderEventItem() {
-    const { events } = this.state;
+    const events = this.props.calendarStore.events;
     return events.length ? (
-      events.sort((a, b) => a.startTime > b.startTime)
-      .map(event => (
-        <EventItem key={event._id} id={event._id} title={event.title} />
-      ))
+      events
+        .sort((a, b) => a.startTime > b.startTime)
+        .map(event => (
+          <EventItem key={event._id} event={event} />
+        ))
     ) : (
       <div>¡Estas libre!</div>
     );
   }
 
   render() {
-    return <div className="event_list__container">{this.renderEventItem()}</div>;
+    return (
+      <div className="event_list__container">{this.renderEventItem()}</div>
+    );
   }
 }
 
