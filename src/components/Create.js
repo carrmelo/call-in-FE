@@ -1,73 +1,54 @@
-import React, { Component } from "react";
-import "./Create.css";
+import React, { Component } from 'react';
+import './Create.css';
+import { inject, observer } from 'mobx-react';
 
+@inject('eventStore')
+@observer
 class Create extends Component {
-  constructor(props) {
-    super(props);
 
-    this.state = {
-      title: "",
-      description: "",
-      startTime: null,
-      endTime: null
-    };
-  }
+  handleChangeTitle = e => this.props.eventStore.setTitle(e.target.value);
+  handleChangeDescription = e => this.props.eventStore.setDescription(e.target.value);
+  handleChangeStartTime = e => this.props.eventStore.setStartTime(e.target.value);
+  handleChangeEndTime = e => this.props.eventStore.setEndTime(e.target.value);
 
-  handleInputChange = e => {
-    const value = e.target.value;
-    const name = e.target.name;
-    this.setState({
-      [name]: value
-    });
-  };
 
-  handleClick = e => {
+  handleSubmit = e => {
     e.preventDefault();
-    const body = JSON.stringify(this.state);
-    this.setState = {
-      title: "",
-      description: "",
-      startTime: null,
-      endTime: null
-    };
-    fetch("http://localhost:5000/events", {
-      method: "POST",
-      body,
-      mode: "cors",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json"
-      }
-    })
-      .then(response => response.json())
-      .then(data => console.log(data))
-      .catch(error => console.error(error));
+    this.props.eventStore.submitEvent()
   };
 
   render() {
-    
+    const {
+      title,
+      description,
+      startTime,
+      endTime
+    } = this.props.eventStore;
     return (
       <form className="create_form_container">
         <label>Title:</label>
         <input
           name="title"
+          value={title}
           type="text"
           placeholder="Title"
-          onChange={this.handleInputChange}
+          onChange={this.handleChangeTitle}
         />
         <label>Description:</label>
         <input
           name="description"
+          value={description}
           type="text"
           placeholder="Description"
-          onChange={this.handleInputChange}
+          onChange={this.handleChangeDescription}
         />
         <label>Start:</label>
         <div>
           <input
             name="startTime"
+            value={startTime}
             type="datetime-local"
-            onChange={this.handleInputChange}
+            onChange={this.handleChangeStartTime}
           />
           <input type="checkbox" name="allDay" value="allDay" />
           <label>Todo el día</label>
@@ -75,10 +56,11 @@ class Create extends Component {
         <label>End:</label>
         <input
           name="endTime"
+          value={endTime}
           type="datetime-local"
-          onChange={this.handleInputChange}
+          onChange={this.handleChangeEndTime}
         />
-        <button onClick={this.handleClick}>Submit</button>
+        <button onClick={this.handleSubmit}>Submit</button>
       </form>
     );
   }

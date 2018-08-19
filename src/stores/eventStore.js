@@ -8,12 +8,12 @@ class EventStore {
   @observable _id = '';
   @observable title = '';
   @observable description = '';
-  @observable startTime = null;
-  @observable endTime = null;
+  @observable startTime = '';
+  @observable endTime = '';
 
   getEvent(event_id) {
     const event = calendarStore.events.filter(event => event._id === event_id);
-    if (event.length) {
+    if (event.length) {      
       this._id = event[0]._id;
       this.title = event[0].title;
       this.description = event[0].description;
@@ -86,7 +86,7 @@ class EventStore {
   submitEvent() {
     this.isLoading = true;
     const event = {
-      _id: this._id,
+      _id: this._id ? this._id : null,
       title: this.title,
       description: this.description,
       startTime: this.startTime,
@@ -95,10 +95,7 @@ class EventStore {
     return (this._id
       ? calendarStore.updateEvent(event)
       : calendarStore.createEvent(event)
-    ).catch(err => {
-      console.error(err);
-      this.isLoading = false;
-    });
+    )
   }
 }
 

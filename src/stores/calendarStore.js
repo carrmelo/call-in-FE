@@ -1,4 +1,5 @@
 import { observable, action } from 'mobx';
+import eventStore from './eventStore';
 
 export class CalendarStore {
   @observable
@@ -23,6 +24,30 @@ export class CalendarStore {
       });
   }
 
+  @action
+  createEvent(event) {
+    console.log('pruebo');
+    
+    const body = JSON.stringify(event);
+    fetch('http://localhost:5000/events', {
+      method: 'POST',
+      body,
+      mode: 'cors',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(response => response.json())
+      .then(action(data => {
+        console.log('hola');
+        
+        console.log(data)
+        this.loadEvents()
+        eventStore.resetEvent()
+      }))
+      .catch(error => console.error(error));
+  }
   @action
   deleteEvent(id) {
     const body = JSON.stringify({ id });

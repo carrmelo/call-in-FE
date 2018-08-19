@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
-
+import { Link } from 'react-router-dom';
 import EventItem from './EventItem';
 
 import './EventList.css';
@@ -17,9 +17,7 @@ class EventsList extends Component {
     return events.length ? (
       events
         .sort((a, b) => a.startTime > b.startTime)
-        .map(event => (
-          <EventItem key={event._id} event={event} />
-        ))
+        .map(event => <EventItem key={event._id} event={event} />)
     ) : (
       <div>¡Estas libre!</div>
     );
@@ -27,7 +25,12 @@ class EventsList extends Component {
 
   render() {
     return (
-      <div className="event_list__container">{this.renderEventItem()}</div>
+      <div className="event_list__container">
+        {this.renderEventItem()}
+        <Link to={'new'}>
+          <button>+</button>
+        </Link>
+      </div>
     );
   }
 }
