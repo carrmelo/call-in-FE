@@ -61,6 +61,7 @@ class EventStore {
 
   @action
   resetEvent() {
+    this._id = '';
     this.title = '';
     this.description = '';
     this.startTime = '';

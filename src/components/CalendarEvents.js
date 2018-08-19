@@ -15,15 +15,13 @@ const localizer = BigCalendar.setLocalizer(BigCalendar.momentLocalizer(moment));
 @withRouter
 @observer
 class Selectable extends React.Component {
-  handleSelect = hola => {
-    console.log(hola);
+  handleSelect = () => {
+    this.props.history.push('/create');
   };
 
-  handleSelectEvent = hola => {
-    console.log(hola._id);
-    
-    this.props.history.push('/')
-  }
+  handleSelectEvent = ({ _id }) => {
+    this.props.history.push(`/${_id}`);
+  };
 
   render() {
     return (
@@ -31,8 +29,8 @@ class Selectable extends React.Component {
         <BigCalendar
           selectable
           localizer={localizer}
-          startAccessor='startTime'
-          endAccessor='endTime'
+          startAccessor="startTime"
+          endAccessor="endTime"
           events={this.props.calendarStore.events}
           defaultView={BigCalendar.Views.MONTH}
           scrollToTime={new Date(1970, 1, 1, 6)}

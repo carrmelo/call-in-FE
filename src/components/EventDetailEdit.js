@@ -23,6 +23,7 @@ class EventDetailEdit extends Component {
 
   handleCloseButton = () => {
     this.props.history.push('/');
+    this.props.eventStore.resetEvent();
   };
 
   render() {
