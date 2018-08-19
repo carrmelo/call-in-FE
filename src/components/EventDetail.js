@@ -8,23 +8,18 @@ import './EventDetail.css';
 @inject('calendarStore', 'eventStore')
 @observer
 class EventDetail extends Component {
-
   componentWillMount() {
     const { eventId } = this.props.match.params;
-    this.props.eventStore.set_id(eventId)
+    this.props.eventStore.set_id(eventId);
   }
 
   componentDidMount() {
-    console.log(this.props);
-
     const { eventId } = this.props.match.params;
     this.props.eventStore.loadEvent(eventId);
   }
 
   componentDidUpdate(prevProps) {
     const { eventId } = this.props.match.params;
-    console.log('sigo aqui');
-    
     if (eventId !== prevProps.match.params.eventId) {
       this.props.eventStore.set_id(eventId);
       this.props.eventStore.loadEvent(eventId);
@@ -43,12 +38,7 @@ class EventDetail extends Component {
 
   render() {
     const { eventId } = this.props.match.params;
-    const {
-      title,
-      description,
-      startTime,
-      endTime
-    } = this.props.eventStore;
+    const { title, description, startTime, endTime } = this.props.eventStore;
 
     const momentStartTime = moment(startTime).format('DD-MM-YYYY HH:mm');
     const momentEndTime = moment(endTime).format('DD-MM-YYYY HH:mm');

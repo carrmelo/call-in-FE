@@ -1,63 +1,35 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
-import "./EventDetailEdit.css";
+import './EventDetailEdit.css';
+import { inject, observer } from 'mobx-react';
 
+@inject('eventStore')
+@observer
 class EventDetailEdit extends Component {
-  constructor(props) {
-    super(props);
+  handleChangeTitle = e => this.props.eventStore.setTitle(e.target.value);
+  handleChangeDescription = e =>
+    this.props.eventStore.setDescription(e.target.value);
+  handleChangeStartTime = e =>
+    this.props.eventStore.setStartTime(e.target.value);
+  handleChangeEndTime = e => this.props.eventStore.setEndTime(e.target.value);
 
-    this.state = {
-      _id: this.props.location.state._id,
-      title: this.props.location.state.title,
-      description: this.props.location.state.description,
-      startTime: this.props.location.state.startTime,
-      endTime: this.props.location.state.endTime
-    };
-  }
+
+  handleSubmit = e => {
+    e.preventDefault();
+    this.props.eventStore.submitEvent();
+    this.handleCloseButton()
+  };
 
   handleCloseButton = () => {
-    this.props.history.push("/");
-  };
-
-  handleInputChange = e => {
-    const value = e.target.value;
-    const name = e.target.name;
-    this.setState({
-      [name]: value
-    });
-  };
-
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.value !== this.props.value) {
-      console.log(this.props); //Here you can fetch the props which you have passed
-    }
-  }
-
-  handleEventEdit = () => {
-    const { _id } = this.state;
-    const body = JSON.stringify({ ...this.state });
-
-    console.log(_id);
-    
-
-    fetch(`http://localhost:5000/events/${_id}`, {
-      method: "PUT",
-      body,
-      mode: "cors",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json"
-      }
-    })
-      .then(response => response.json())
-      .then(() => this.props.history.push("/"))
-      .catch(error => console.error(error));
+    this.props.history.push('/');
   };
 
   render() {
-    const { _id, title, description, startTime, endTime } = this.state;
-
+    const { eventId } = this.props.match.params;
+    const { title, description, startTime, endTime } = this.props.eventStore;
+    console.log(eventId);
+    
     return (
       <div className="event_detail__container">
         <button
@@ -72,38 +44,40 @@ class EventDetailEdit extends Component {
         <div className="event_edit_input__container">
           <input
             name="title"
+            value={title}
             type="text"
             placeholder={title}
-            onChange={this.handleInputChange}
+            onChange={this.handleChangeTitle}
           />
           <input
             name="description"
+            value={description}
             type="text"
             placeholder={description}
-            onChange={this.handleInputChange}
+            onChange={this.handleChangeDescription}
           />
           <input
             name="startTime"
-            type="datetime-local"
             value={startTime.substring(0, 16)}
-            onChange={this.handleInputChange}
+            type="datetime-local"
+            onChange={this.handleChangeStartTime}
           />
           <input
             name="endTime"
-            type="datetime-local"
             value={endTime.substring(0, 16)}
-            onChange={this.handleInputChange}
+            type="datetime-local"
+            onChange={this.handleChangeEndTime}
           />
         </div>
         <div className="event_detail_buttons__container">
-          <Link to={`/${_id}`}>
+          <Link to={eventId ? `/${eventId}` : '/'}>
             <button>
               <span role="img" aria-labelledby="delete">
                 ❌️
               </span>
             </button>
           </Link>
-          <button onClick={this.handleEventEdit}>
+          <button onClick={this.handleSubmit}>
             <span role="img" aria-labelledby="edit">
               ✅
             </span>

@@ -98,7 +98,7 @@ class EventStore {
       endTime: this.endTime
     };
     return (this._id
-      ? calendarStore.updateEvent(event)
+      ? calendarStore.updateEvent(event, this._id)
       : calendarStore.createEvent(event)
     )
   }

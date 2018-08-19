@@ -20,10 +20,11 @@ class App extends Component {
           <DevTools />
           <Switch>
             <Route exact path="/:eventId" component={EventDetail} />
-            <Route exact path="/edit/:eventId?" component={EventDetailEdit} />
+            <Route exact path="/create" component={Create} />
+            <Route exact path="/edit/:eventId" component={EventDetailEdit} />
           </Switch>
           <EventsList />
-          {/* <Create /> */}
+          <Create />
           <Selectable />
         </div>
       </Router>
