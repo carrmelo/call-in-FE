@@ -1,17 +1,15 @@
-import React, { Component } from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import React, { Component } from 'react';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { observer } from 'mobx-react';
 import DevTools from 'mobx-react-devtools';
 
-
-import Create from "./Create";
-import EventsList from "./EventsList";
-import EventDetail from "./EventDetail";
-import EventDetailEdit from "./EventDetailEdit";
+import Create from './Create';
+import EventsList from './EventsList';
+import EventDetail from './EventDetail';
+import EventDetailEdit from './EventDetailEdit';
 import Selectable from './CalendarEvents';
 
-
-import "./App.css";
+import './App.css';
 
 @observer
 class App extends Component {

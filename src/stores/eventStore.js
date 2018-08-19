@@ -2,7 +2,7 @@ import { observable, action } from 'mobx';
 
 import calendarStore from './calendarStore';
 
-class Event {
+class EventStore {
   @observable _id = '';
   @observable title = '';
   @observable description = '';
@@ -54,4 +54,4 @@ class Event {
   }
 }
 
-export default new Event();
+export default new EventStore();
