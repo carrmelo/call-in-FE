@@ -1,54 +1,45 @@
-import React from "react";
-import moment from "moment";
-import BigCalendar from "react-big-calendar";
+import React from 'react';
+import { withRouter } from 'react-router-dom';
+import moment from 'moment';
+import BigCalendar from 'react-big-calendar';
 
-import 'react-big-calendar/lib/css/react-big-calendar.css'
-import './CalendarEvents.css'
+import 'react-big-calendar/lib/css/react-big-calendar.css';
+import './CalendarEvents.css';
+import { observer, inject } from 'mobx-react';
 
 const propTypes = {};
 
 const localizer = BigCalendar.setLocalizer(BigCalendar.momentLocalizer(moment));
 
+@inject('calendarStore')
+@withRouter
+@observer
 class Selectable extends React.Component {
-  constructor(...args) {
-    super(...args);
-
-    this.state = {
-      events: [
-        {
-          id: 0,
-          title: "All Day Event very long title",
-          allDay: true,
-          start: new Date(2018, 0, 18),
-          end: new Date(2018, 0, 18)
-        }
-      ]
-    };
-  }
-
-  handleSelect = ({ start, end }) => {
-    const title = window.prompt("New Event name");
-    if (title)
-      this.setState({
-        events: [
-          ...this.state.events,
-          {
-            start,
-            end,
-            title
-          }
-        ]
-      });
+  handleSelect = hola => {
+    console.log(hola);
   };
+
+  handleSelectEvent = hola => {
+    console.log(hola._id);
+    
+    this.props.history.push('/')
+  }
 
   render() {
     return (
       <div className="calendar__container">
         <BigCalendar
+          selectable
           localizer={localizer}
-          events={this.state.events}
-          startAccessor="start"
-          endAccessor="end"
+          startAccessor='startTime'
+          endAccessor='endTime'
+          events={this.props.calendarStore.events}
+          defaultView={BigCalendar.Views.MONTH}
+          scrollToTime={new Date(1970, 1, 1, 6)}
+          defaultDate={new Date(Date.now())}
+          onSelectEvent={this.handleSelectEvent}
+          onSelectSlot={this.handleSelect}
+          step={15}
         />
       </div>
     );
