@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { observer } from 'mobx-react';
+import DevTools from 'mobx-react-devtools';
+
 
 import Create from "./Create";
 import EventsList from "./EventsList";
@@ -17,6 +19,7 @@ class App extends Component {
     return (
       <Router>
         <div className="App">
+          <DevTools />
           <Route path="/:eventId" component={EventDetail} />
           <Route path="/edit/:eventId" component={EventDetailEdit} />
           <EventsList />
