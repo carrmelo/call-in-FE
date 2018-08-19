@@ -1,34 +1,19 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { observer, inject } from 'mobx-react';
+import moment from 'moment';
 
-import moment from "moment";
-
-import "./EventDetail.css";
+import './EventDetail.css';
 
 class EventDetail extends Component {
-  constructor(props) {
-    super(props);
+  // componentDidMount() {
+  //   const { eventId } = this.props.match.params;
 
-    this.state = {
-      _id: "",
-      title: "",
-      description: "",
-      startTime: null,
-      endTime: null
-    };
-  }
-
-  componentDidMount() {
-    const { url } = this.props.match;
-
-    fetch(`http://localhost:5000/events${url}`)
-      .then(response => response.json())
-      .then(data => this.setState({ ...data }))
-      .catch(error => console.error(error));
-  }
+  //   this.props.calendarStore.loadEvent(eventId);
+  // }
 
   handleCloseButton = () => {
-    this.props.history.push("/");
+    this.props.history.push('/');
   };
 
   handleDeleteButton = () => {
@@ -36,24 +21,31 @@ class EventDetail extends Component {
     const body = JSON.stringify({ id: this.state._id });
 
     fetch(`http://localhost:5000/events${url}`, {
-      method: "DELETE",
+      method: 'DELETE',
       body,
-      mode: "cors",
+      mode: 'cors',
       headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json"
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
       }
     })
       .then(response => response.json())
-      .then(() => this.props.history.push("/"))
+      .then(() => this.props.history.push('/'))
       .catch(error => console.error(error));
   };
 
   render() {
-    const { _id, title, description, startTime, endTime } = this.state;
 
-    const momentStartTime = moment(startTime).format("DD-MM-YYYY HH:mm");
-    const momentEndTime = moment(endTime).format("DD-MM-YYYY HH:mm");
+    const {
+      _id,
+      title,
+      description,
+      startTime,
+      endTime
+    } = this.props.location.state;
+
+    const momentStartTime = moment(startTime).format('DD-MM-YYYY HH:mm');
+    const momentEndTime = moment(endTime).format('DD-MM-YYYY HH:mm');
     const momentReferencialStartTime =
       startTime < Date.now
         ? moment(startTime).fromNow()
