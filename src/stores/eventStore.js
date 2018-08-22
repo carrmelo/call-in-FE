@@ -92,12 +92,12 @@ class EventStore {
   submitEvent() {
     this.isLoading = true;
     const event = {
-      _id: this._id ? this._id : null,
       title: this.title,
       description: this.description,
-      startTime: this.startTime,
-      endTime: this.endTime
-    };
+      startTime: new Date(this.startTime),
+      endTime: new Date(this.endTime),
+      allDay: false
+    }
     return (this._id
       ? calendarStore.updateEvent(event, this._id)
       : calendarStore.createEvent(event)
