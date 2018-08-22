@@ -1,7 +1,12 @@
 {
-  "name": "cal-in-fe",
+  "name": "client",
   "version": "0.1.0",
   "private": true,
+  "proxy": {
+    "/api": {
+      "target": "http://localhost:3001"
+    }
+  },
   "dependencies": {
     "ajv": "^6.5.2",
     "autoprefixer": "7.1.6",
