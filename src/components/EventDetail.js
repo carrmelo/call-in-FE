@@ -15,6 +15,8 @@ class EventDetail extends Component {
 
   componentDidMount() {
     const { eventId } = this.props.match.params;
+    console.log(eventId);
+    
     this.props.eventStore.loadEvent(eventId);
   }
 
@@ -69,7 +71,7 @@ class EventDetail extends Component {
             to={{
               pathname: `/edit/${eventId}`,
               state: {
-                _id: eventId,
+                id: eventId,
                 title,
                 description,
                 startTime,

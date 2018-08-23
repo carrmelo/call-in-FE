@@ -52,10 +52,10 @@ export class CalendarStore {
   }
 
   @action
-  updateEvent(event, _id) {
+  updateEvent(event, id) {
     const body = JSON.stringify(event);
 
-    fetch(`http://localhost:3000/api/v1/events/${_id}`, {
+    fetch(`http://localhost:3000/api/v1/events/${id}`, {
       method: 'PUT',
       body,
       mode: 'cors',
@@ -93,7 +93,7 @@ export class CalendarStore {
       .then(response => response.json())
       .then(
         action(() => {
-          this.events.replace(this.events.filter(event => event._id !== id));
+          this.events.replace(this.events.filter(event => event.id !== id));
         })
       )
       .catch(error => console.error(error));

@@ -5,16 +5,16 @@ import calendarStore from './calendarStore';
 class EventStore {
   @observable isLoading = false;
 
-  @observable _id = '';
+  @observable id = '';
   @observable title = '';
   @observable description = '';
   @observable startTime = '';
   @observable endTime = '';
 
   getEvent(event_id) {
-    const event = calendarStore.events.filter(event => event._id === event_id);
+    const event = calendarStore.events.filter(event => event.id === event_id);
     if (event.length) {      
-      this._id = event[0]._id;
+      this.id = event[0].id;
       this.title = event[0].title;
       this.description = event[0].description;
       this.startTime = event[0].startTime;
@@ -24,15 +24,20 @@ class EventStore {
 
   @action
   set_id(event_id) {
-    if (this._id !== event_id) {
+    if (this.id !== event_id) {
       this.resetEvent();
-      this._id = event_id;
+      this.id = event_id;
     }
   }
 
   @action loadInitialData() {
-    if (!this._id) return this.resetEvent();
+    if (!this.id) return this.resetEvent();
     else return this.loadEvent(this.id);
+  }
+
+  @action loadStartAndEndTime(start, end) {    
+    this.startTime = start.toISOString().substring(0, 16);
+    this.endTime = end.toISOString().substring(0, 16);
   }
 
   @action
@@ -40,11 +45,13 @@ class EventStore {
     const event = this.getEvent(id);
     if (!event) {
       this.isLoading = true;
-      fetch(`http://localhost:5000/events/${id}`)
+      fetch(`http://localhost:3000/api/v1/events/${id}`)
         .then(response => response.json())
         .then(
           action(data => {
-            this._id = data._id;
+            console.log('now', data);
+            
+            this.id = data.id;
             this.title = data.title;
             this.description = data.description;
             this.startTime = data.startTime;
@@ -61,7 +68,7 @@ class EventStore {
 
   @action
   resetEvent() {
-    this._id = '';
+    this.id = '';
     this.title = '';
     this.description = '';
     this.startTime = '';
@@ -98,8 +105,8 @@ class EventStore {
       endTime: new Date(this.endTime),
       allDay: false
     }
-    return (this._id
-      ? calendarStore.updateEvent(event, this._id)
+    return (this.id
+      ? calendarStore.updateEvent(event, this.id)
       : calendarStore.createEvent(event)
     )
   }

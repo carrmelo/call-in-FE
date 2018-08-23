@@ -17,7 +17,7 @@ class EventsList extends Component {
     return events.length ? (
       events
         .sort((a, b) => a.startTime > b.startTime)
-        .map(event => <EventItem key={event._id} event={event} />)
+        .map(event => <EventItem key={event.id} event={event} />)
     ) : (
       <div>¡Estas libre!</div>
     );

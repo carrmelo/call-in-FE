@@ -6,9 +6,9 @@ const EventItem = props => {
   return (
     <Link
       to={{
-        pathname: event._id,
+        pathname: event.id,
         state: {
-          _id: event._id,
+          id: event.id,
           title: event.title,
           description: event.description,
           startTime: event.startTime,

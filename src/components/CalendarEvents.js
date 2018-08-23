@@ -11,16 +11,19 @@ const propTypes = {};
 
 const localizer = BigCalendar.setLocalizer(BigCalendar.momentLocalizer(moment));
 
-@inject('calendarStore')
+@inject('calendarStore', 'eventStore')
 @withRouter
 @observer
 class Selectable extends React.Component {
-  handleSelect = () => {
+  handleSelect = e => {
+    console.log(e);
+
+    this.props.eventStore.loadStartAndEndTime(e.start, e.end);
     this.props.history.push('/create');
   };
 
-  handleSelectEvent = ({ _id }) => {
-    this.props.history.push(`/${_id}`);
+  handleSelectEvent = ({ id }) => {
+    this.props.history.push(`/${id}`);
   };
 
   render() {

@@ -29,7 +29,6 @@ class EventDetailEdit extends Component {
   render() {
     const { eventId } = this.props.match.params;
     const { title, description, startTime, endTime } = this.props.eventStore;
-    console.log(eventId);
     
     return (
       <div className="event_detail__container">
