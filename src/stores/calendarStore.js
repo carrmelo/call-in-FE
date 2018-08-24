@@ -28,7 +28,7 @@ export class CalendarStore {
   createEvent(event) {
     const body = JSON.stringify(event);
     console.log(body);
-    
+
     fetch('http://localhost:3000/events', {
       method: 'POST',
       body,
@@ -90,10 +90,11 @@ export class CalendarStore {
         'Content-Type': 'application/json'
       }
     })
-      .then(response => response.json())
+      .then(response => (response.status === 204 ? response : response.json()))
       .then(
         action(() => {
-          this.events.replace(this.events.filter(event => event.id !== id));
+          const item = this.events.find(item => id !== item.id);
+          this.events.remove(item);
         })
       )
       .catch(error => console.error(error));
