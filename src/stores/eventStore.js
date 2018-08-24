@@ -3,17 +3,23 @@ import { observable, action } from 'mobx';
 import calendarStore from './calendarStore';
 
 class EventStore {
-  @observable isLoading = false;
+  @observable
+  isLoading = false;
 
-  @observable id = '';
-  @observable title = '';
-  @observable description = '';
-  @observable startTime = '';
-  @observable endTime = '';
+  @observable
+  id = '';
+  @observable
+  title = '';
+  @observable
+  description = '';
+  @observable
+  startTime = '';
+  @observable
+  endTime = '';
 
   getEvent(event_id) {
     const event = calendarStore.events.filter(event => event.id === event_id);
-    if (event.length) {      
+    if (event.length) {
       this.id = event[0].id;
       this.title = event[0].title;
       this.description = event[0].description;
@@ -30,12 +36,14 @@ class EventStore {
     }
   }
 
-  @action loadInitialData() {
+  @action
+  loadInitialData() {
     if (!this.id) return this.resetEvent();
     else return this.loadEvent(this.id);
   }
 
-  @action loadStartAndEndTime(start, end) {    
+  @action
+  loadStartAndEndTime(start, end) {
     this.startTime = start.toISOString().substring(0, 16);
     this.endTime = end.toISOString().substring(0, 16);
   }
@@ -45,12 +53,10 @@ class EventStore {
     const event = this.getEvent(id);
     if (!event) {
       this.isLoading = true;
-      fetch(`http://localhost:3000/api/v1/events/${id}`)
+      fetch(`http://localhost:3000/events/${id}`)
         .then(response => response.json())
         .then(
           action(data => {
-            console.log('now', data);
-            
             this.id = data.id;
             this.title = data.title;
             this.description = data.description;
@@ -97,11 +103,6 @@ class EventStore {
 
   @action
   submitEvent() {
-    console.log(this.startTime);
-    console.log(this.endTime);
-    console.log(new Date(this.startTime));
-    console.log(new Date(this.endTime));
-    
     this.isLoading = true;
     const event = {
       title: this.title,
@@ -109,14 +110,11 @@ class EventStore {
       startTime: new Date(this.startTime),
       endTime: new Date(this.endTime),
       allDay: false
-    }
+    };
 
-    console.log('yo', event);
-    
-    return (this.id
+    return this.id
       ? calendarStore.updateEvent(event, this.id)
-      : calendarStore.createEvent(event)
-    )
+      : calendarStore.createEvent(event);
   }
 }
 

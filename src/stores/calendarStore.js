@@ -10,7 +10,7 @@ export class CalendarStore {
   @action
   loadEvents() {
     this.isLoading = true;
-    return fetch('http://localhost:3000/api/v1/events')
+    return fetch('http://localhost:3000/events')
       .then(response => response.json())
       .then(
         action(data => {
@@ -29,7 +29,7 @@ export class CalendarStore {
     const body = JSON.stringify(event);
     console.log(body);
     
-    fetch('http://localhost:3000/api/v1/events', {
+    fetch('http://localhost:3000/events', {
       method: 'POST',
       body,
       mode: 'cors',
@@ -55,7 +55,7 @@ export class CalendarStore {
   updateEvent(event, id) {
     const body = JSON.stringify(event);
 
-    fetch(`http://localhost:3000/api/v1/events/${id}`, {
+    fetch(`http://localhost:3000/events/${id}`, {
       method: 'PUT',
       body,
       mode: 'cors',
@@ -81,7 +81,7 @@ export class CalendarStore {
   deleteEvent(id) {
     const body = JSON.stringify({ id });
 
-    fetch(`http://localhost:3000/api/v1/events/${id}`, {
+    fetch(`http://localhost:3000/events/${id}`, {
       method: 'DELETE',
       body,
       mode: 'cors',
