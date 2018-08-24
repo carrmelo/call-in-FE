@@ -8,6 +8,7 @@ import EventsList from './EventsList';
 import EventDetail from './EventDetail';
 import EventDetailEdit from './EventDetailEdit';
 import Selectable from './CalendarEvents';
+import Agenda from './Agenda';
 
 import './App.css';
 
@@ -23,7 +24,7 @@ class App extends Component {
             <Route exact path="/:eventId" component={EventDetail} />
             <Route exact path="/edit/:eventId" component={EventDetailEdit} />
           </Switch>
-          <EventsList />
+          <Agenda />
           <Selectable />
         </div>
       </Router>
