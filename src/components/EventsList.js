@@ -14,6 +14,8 @@ class EventsList extends Component {
 
   renderEventItem() {
     const events = this.props.calendarStore.events;
+    console.log('list', events);
+    
     return events.length ? (
       events
         .slice().sort((a, b) => a.startTime > b.startTime)
