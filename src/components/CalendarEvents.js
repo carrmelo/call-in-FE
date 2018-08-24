@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import moment from 'moment';
 import BigCalendar from 'react-big-calendar';
@@ -14,7 +14,11 @@ const localizer = BigCalendar.setLocalizer(BigCalendar.momentLocalizer(moment));
 @inject('calendarStore', 'eventStore')
 @withRouter
 @observer
-class Selectable extends React.Component {
+class Selectable extends Component {
+  componentDidMount() {
+    this.props.calendarStore.loadEvents();
+  }
+
   handleSelect = e => {
     this.props.eventStore.loadStartAndEndTime(e.start, e.end);
     this.props.history.push('/create');
