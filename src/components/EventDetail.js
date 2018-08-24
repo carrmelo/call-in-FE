@@ -15,8 +15,7 @@ class EventDetail extends Component {
 
   componentDidMount() {
     const { eventId } = this.props.match.params;
-    console.log(eventId);
-    
+
     this.props.eventStore.loadEvent(eventId);
   }
 

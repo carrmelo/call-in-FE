@@ -27,7 +27,6 @@ export class CalendarStore {
   @action
   createEvent(event) {
     const body = JSON.stringify(event);
-    console.log(body);
 
     fetch('http://localhost:3000/events', {
       method: 'POST',
@@ -41,9 +40,6 @@ export class CalendarStore {
       .then(response => response.json())
       .then(
         action(data => {
-          console.log('hola');
-
-          console.log(data);
           this.loadEvents();
           eventStore.resetEvent();
         })
@@ -66,10 +62,7 @@ export class CalendarStore {
     })
       .then(response => response.json())
       .then(
-        action(data => {
-          console.log('hola');
-
-          console.log(data);
+        action(() => {
           this.loadEvents();
           eventStore.resetEvent();
         })
