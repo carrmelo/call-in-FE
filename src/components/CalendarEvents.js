@@ -16,8 +16,6 @@ const localizer = BigCalendar.setLocalizer(BigCalendar.momentLocalizer(moment));
 @observer
 class Selectable extends React.Component {
   handleSelect = e => {
-    console.log(e);
-
     this.props.eventStore.loadStartAndEndTime(e.start, e.end);
     this.props.history.push('/create');
   };
@@ -32,8 +30,8 @@ class Selectable extends React.Component {
         <BigCalendar
           selectable
           localizer={localizer}
-          startAccessor="startTime"
-          endAccessor="endTime"
+          startAccessor={event => new Date(event.startTime)}
+          endAccessor={event => new Date(event.endTime)}
           events={this.props.calendarStore.events}
           defaultView={BigCalendar.Views.MONTH}
           scrollToTime={new Date(1970, 1, 1, 6)}

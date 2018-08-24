@@ -97,6 +97,11 @@ class EventStore {
 
   @action
   submitEvent() {
+    console.log(this.startTime);
+    console.log(this.endTime);
+    console.log(new Date(this.startTime));
+    console.log(new Date(this.endTime));
+    
     this.isLoading = true;
     const event = {
       title: this.title,
@@ -105,6 +110,9 @@ class EventStore {
       endTime: new Date(this.endTime),
       allDay: false
     }
+
+    console.log('yo', event);
+    
     return (this.id
       ? calendarStore.updateEvent(event, this.id)
       : calendarStore.createEvent(event)
