@@ -31,3 +31,8 @@ button {
   margin: 5px;
   border: none;
 }
+
+.required {
+  font-size: 0.7rem;
+  color:red;
+}
