@@ -1,6 +1,6 @@
 import { Collection, Model } from 'mobx-rest';
 
-class EventModel extends Model {}
+class EventModel extends Model { }
 
 class EventsCollection extends Collection {
   url() {

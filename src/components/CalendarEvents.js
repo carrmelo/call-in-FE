@@ -15,19 +15,21 @@ const localizer = BigCalendar.setLocalizer(BigCalendar.momentLocalizer(moment));
 @withRouter
 @observer
 class Selectable extends Component {
-
   componentDidMount() {
-    events.fetch()
-    
-
-    // if (events)
-    
-    // this.props.calendarStore.loadEvents();
+    events.fetch();
   }
 
   handleSelect = e => {
-    this.props.eventStore.loadStartAndEndTime(e.start, e.end);
-    this.props.history.push('/create');
+    const event = new Event({ title: 'Trash' });
+    console.log(event);
+    
+    event.get('title'); // => 'Trash'
+    event.set({ title: 'Rubbish' });
+    event.get('title'); // => 'Rubbish'
+    console.log(event);
+    
+    // this.props.eventStore.loadStartAndEndTime(e.start, e.end);
+    // this.props.history.push('/create');
   };
 
   handleSelectEvent = ({ id }) => {
@@ -37,7 +39,7 @@ class Selectable extends Component {
   render() {
     console.log(events.isRequest('fetching'));
     console.log(events.toJS());
-    
+
     return (
       <div className="calendar__container">
         <BigCalendar

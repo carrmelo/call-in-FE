@@ -5,6 +5,14 @@ import { inject, observer } from 'mobx-react';
 @inject('eventStore')
 @observer
 class Create extends Component {
+
+  state = {
+    title: '',
+    description: '',
+    startTime: '',
+    endtime: '',
+  }
+
   handleChangeTitle = e => this.props.eventStore.setTitle(e.target.value);
   handleChangeDescription = e =>
     this.props.eventStore.setDescription(e.target.value);
