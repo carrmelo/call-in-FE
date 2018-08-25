@@ -1,8 +1,8 @@
-exports.formRequiredFieldHandler = field => (!field ? true : false);
+export const formRequiredFieldHandler = field => (!field ? true : false);
 
-exports.formDatesHander = (startTime, endTime) => startTime > endTime;
+export const formDatesHander = (startTime, endTime) => startTime > endTime;
 
-exports.formErrorHandler = (...args) => {
+export const formErrorHandler = (...args) => {
   const formErrors = [...args];
   return formErrors.some(error => error);
 };
