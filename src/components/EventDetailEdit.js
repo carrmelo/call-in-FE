@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
 import './EventDetailEdit.css';
-import { inject, observer } from 'mobx-react';
+import { inject, observer, PropTypes as mobxPropTypes } from 'mobx-react';
+import { PropTypes } from 'prop-types';
 
 import {
   formErrorHandler,
@@ -13,6 +14,17 @@ import {
 @inject('eventStore')
 @observer
 class EventDetailEdit extends Component {
+  static propTypes = {
+    event: PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      title: PropTypes.number.isRequired,
+      description: PropTypes.string,
+      startTime: PropTypes.string.isRequired,
+      endTime: PropTypes.string.isRequired,
+      allDay: PropTypes.string.isRequired
+    })
+  }
+
   state = {
     touched: {
       title: false,
