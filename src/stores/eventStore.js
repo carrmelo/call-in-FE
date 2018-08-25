@@ -65,6 +65,7 @@ class EventStore {
             this.description = data.description;
             this.startTime = data.startTime;
             this.endTime = data.endTime;
+            this.allDay = data.allDay;
             this.isLoading = false;
           })
         )
@@ -79,6 +80,7 @@ class EventStore {
     this.description = '';
     this.startTime = '';
     this.endTime = '';
+    this.allDay = false;
   }
 
   @action
@@ -104,8 +106,6 @@ class EventStore {
   @action
   toggleAllDay() {
     this.allDay = !this.allDay;
-    console.log(this.allDay);
-    
   }
 
   @action
@@ -116,7 +116,7 @@ class EventStore {
       description: this.description,
       startTime: new Date(this.startTime),
       endTime: new Date(this.endTime),
-      allDay: false
+      allDay: this.allDay
     };
 
     return this.id

@@ -43,15 +43,7 @@ class Create extends Component {
   toggleLocalAllDay = () => {
     this.props.eventStore.toggleAllDay();
     const { allDay, startTime } = this.props.eventStore
-    if (allDay) {
-      console.log(startTime);
-      
-      const startDay = new Date(startTime).getDate()
-      const startMonth = new Date(startTime).getFullYear()
-      const startYear = new Date(startTime).getMonth()
-      console.log(startDay, startMonth, startYear);
-      this.props.eventStore.setEndTime(startTime);
-    }
+    if (allDay) this.props.eventStore.setEndTime(startTime);
   };
 
   handleSubmit = e => {
