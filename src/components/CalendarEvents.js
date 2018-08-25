@@ -4,7 +4,7 @@ import moment from 'moment';
 import BigCalendar from 'react-big-calendar';
 
 import 'react-big-calendar/lib/css/react-big-calendar.css';
-import './CalendarEvents.css';
+import '../style/CalendarEvents.css';
 import { observer, inject } from 'mobx-react';
 
 const propTypes = {};

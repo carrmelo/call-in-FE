@@ -9,7 +9,7 @@ import EventDetail from './EventDetail';
 import EventDetailEdit from './EventDetailEdit';
 import Selectable from './CalendarEvents';
 
-import './App.css';
+import '../style/App.css';
 
 @observer
 class App extends Component {

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './Create.css';
+import '../style/Create.css';
 import { inject, observer } from 'mobx-react';
 
 @inject('eventStore')

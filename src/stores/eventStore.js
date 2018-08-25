@@ -1,6 +1,7 @@
 import { observable, action } from 'mobx';
 
 import calendarStore from './calendarStore';
+import { apiFetch, apiError } from '../helpers/api';
 
 class EventStore {
   @observable
@@ -53,8 +54,8 @@ class EventStore {
     const event = this.getEvent(id);
     if (!event) {
       this.isLoading = true;
-      fetch(`http://localhost:3000/events/${id}`)
-        .then(response => response.json())
+      const requestOptions = { url: `http://localhost:3000/events/${id}` };
+      return apiFetch(requestOptions)
         .then(
           action(data => {
             this.id = data.id;
@@ -65,10 +66,7 @@ class EventStore {
             this.isLoading = false;
           })
         )
-        .catch(error => {
-          this.isLoading = false;
-          console.error(error);
-        });
+        .catch(error => apiError(error));
     } else return event;
   }
 

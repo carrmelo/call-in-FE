@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
-import './EventDetailEdit.css';
+import '../style/EventDetailEdit.css';
 import { inject, observer } from 'mobx-react';
 
 @inject('eventStore')

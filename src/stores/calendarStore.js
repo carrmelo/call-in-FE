@@ -1,5 +1,6 @@
 import { observable, action } from 'mobx';
 import eventStore from './eventStore';
+import { apiFetch, apiError } from '../helpers/api';
 
 export class CalendarStore {
   @observable
@@ -7,90 +8,71 @@ export class CalendarStore {
   @observable
   events = [];
 
+  baseUrl = 'http://localhost:3000/events';
+
   @action
   loadEvents() {
     this.isLoading = true;
-    return fetch('http://localhost:3000/events')
-      .then(response => response.json())
-      .then(
-        action(data => {
-          this.events = data;
-          this.isLoading = false;
-        })
-      )
-      .catch(error => {
-        console.error(error);
+    const requestOptions = { url: this.baseUrl };
+    return apiFetch(requestOptions).then(
+      action(data => {
+        this.events = data;
         this.isLoading = false;
-      });
+      })
+    ).catch(error => apiError(error));
   }
 
   @action
   createEvent(event) {
-    const body = JSON.stringify(event);
-
-    fetch('http://localhost:3000/events', {
+    this.isLoading = true;
+    const requestOptions = {
+      url: this.baseUrl,
       method: 'POST',
-      body,
-      mode: 'cors',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-      }
-    })
-      .then(response => response.json())
-      .then(
-        action(data => {
-          this.loadEvents();
-          eventStore.resetEvent();
-        })
-      )
-      .catch(error => console.error(error));
+      body: event
+    };
+    return apiFetch(requestOptions).then(
+      action(() => {
+        this.isLoading = false;
+        this.loadEvents();
+        eventStore.resetEvent();
+      })
+    ).catch(error => apiError(error));
   }
 
   @action
   updateEvent(event, id) {
-    const body = JSON.stringify(event);
-
-    fetch(`http://localhost:3000/events/${id}`, {
+    this.isLoading = true;
+    const requestOptions = {
+      url: `${this.baseUrl}/${id}`,
       method: 'PUT',
-      body,
-      mode: 'cors',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-      }
-    })
-      .then(response => response.json())
-      .then(
-        action(() => {
-          this.loadEvents();
-          eventStore.resetEvent();
-        })
-      )
-      .catch(error => console.error(error));
+      body: event
+    };
+    return apiFetch(requestOptions).then(
+      action(() => {
+        this.isLoading = false;
+        this.loadEvents();
+        eventStore.resetEvent();
+      })
+    ).catch(error => apiError(error));
   }
 
   @action
   deleteEvent(id) {
-    const body = JSON.stringify({ id });
-
-    fetch(`http://localhost:3000/events/${id}`, {
+    this.isLoading = true;
+    const requestOptions = {
+      url: `${this.baseUrl}/${id}`,
       method: 'DELETE',
-      body,
-      mode: 'cors',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-      }
-    })
-      .then(response => (response.status === 204 ? response : response.json()))
-      .then(
-        action(() => {
-          const item = this.events.find(item => id !== item.id);
-          this.events.remove(item);
-        })
-      )
-      .catch(error => console.error(error));
+      body: { id }
+    };
+    return apiFetch(requestOptions).then(
+      action(() => {
+        const item = this.events.find(item => +id === item.id);
+        this.events.remove(item);
+        this.loadEvents(); // added to filter the eliminated event from the calendar
+        eventStore.resetEvent();
+        this.isLoading = false;
+      })
+    ).catch(error => apiError(error));
   }
 }
 

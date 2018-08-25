@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import { Provider } from 'mobx-react';
 import { configure } from 'mobx';
 
-import "./index.css";
+import "./style/index.css";
 import App from "./components/App";
 import registerServiceWorker from "./registerServiceWorker";
 
