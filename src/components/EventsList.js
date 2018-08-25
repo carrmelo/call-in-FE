@@ -1,13 +1,20 @@
 import React, { Component } from 'react';
-import { inject, observer } from 'mobx-react';
+import { inject, observer, PropTypes as mobxPropTypes } from 'mobx-react';
 import { Link } from 'react-router-dom';
 import EventItem from './EventItem';
+
+import { PropTypes } from 'prop-types';
 
 import './EventList.css';
 
 @inject('calendarStore')
 @observer
 class EventsList extends Component {
+  static propTypes = {
+    events: mobxPropTypes.observableArray,
+    loadEvents: PropTypes.func
+  }
+
   componentDidMount() {
     this.props.calendarStore.loadEvents();
   }
