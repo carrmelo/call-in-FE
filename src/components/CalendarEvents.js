@@ -14,7 +14,7 @@ const localizer = BigCalendar.setLocalizer(BigCalendar.momentLocalizer(moment));
 @inject('calendarStore', 'eventStore')
 @withRouter
 @observer
-class Selectable extends Component {
+export default class Selectable extends Component {
   componentDidMount() {
     this.props.calendarStore.loadEvents();
   }
@@ -50,5 +50,3 @@ class Selectable extends Component {
 }
 
 Selectable.propTypes = propTypes;
-
-export default Selectable;

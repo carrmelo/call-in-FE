@@ -12,7 +12,7 @@ import {
 
 @inject('eventStore')
 @observer
-class EventDetailEdit extends Component {
+export default class EventDetailEdit extends Component {
   state = {
     touched: {
       title: false,
@@ -39,7 +39,7 @@ class EventDetailEdit extends Component {
 
   toggleLocalAllDay = () => {
     this.props.eventStore.toggleAllDay();
-    const { allDay, startTime } = this.props.eventStore
+    const { allDay, startTime } = this.props.eventStore;
     if (allDay) this.props.eventStore.setEndTime(startTime);
   };
 
@@ -56,24 +56,24 @@ class EventDetailEdit extends Component {
 
   handleFieldErrorMessage = (inputProperty, field) => {
     return this.state.touched[inputProperty] &&
-      formRequiredFieldHandler(field) ? (
+      formRequiredFieldHandler(field) && (
       <p className="required">This field is required</p>
-    ) : null;
+    );
   };
 
   handleDatesErrorMessage = (startTime, endTime) => {
     return (this.state.touched['startTime'] || this.state.touched['endTime']) &&
-      formDatesHander(startTime, endTime) ? (
+      formDatesHander(startTime, endTime) && (
       <p className="required">
         End date and time should be after start date and time
       </p>
-    ) : null;
+    );
   };
 
   renderAllDay = () => {
     const { startTime } = this.props.eventStore;
     let { allDay } = this.props.eventStore;
-    return startTime ? (
+    return startTime && (
       <div>
         <input
           type="checkbox"
@@ -84,12 +84,18 @@ class EventDetailEdit extends Component {
         />
         <label>All day</label>
       </div>
-    ) : null;
+    );
   };
 
   render() {
     const { eventId } = this.props.match.params;
-    const { title, description, startTime, endTime, allDay } = this.props.eventStore;
+    const {
+      title,
+      description,
+      startTime,
+      endTime,
+      allDay
+    } = this.props.eventStore;
 
     return (
       <div className="event_detail__container">
@@ -167,5 +173,3 @@ class EventDetailEdit extends Component {
     );
   }
 }
-
-export default EventDetailEdit;

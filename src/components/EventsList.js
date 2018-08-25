@@ -8,7 +8,7 @@ import './EventList.css';
 
 @inject('calendarStore')
 @observer
-class EventsList extends Component {
+export default class EventsList extends Component {
   componentDidMount() {
     this.props.calendarStore.loadEvents();
   }
@@ -36,5 +36,3 @@ class EventsList extends Component {
     );
   }
 }
-
-export default EventsList;

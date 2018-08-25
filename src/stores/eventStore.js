@@ -3,7 +3,7 @@ import { observable, action } from 'mobx';
 import calendarStore from './calendarStore';
 import { apiFetch, apiError } from '../helpers/api';
 
-class EventStore {
+export class EventStore {
   @observable
   isLoading = false;
 
