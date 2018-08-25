@@ -1,6 +1,7 @@
 import { observable, action } from 'mobx';
-import eventStore from './eventStore';
+
 import { apiFetch, apiError } from '../helpers/api';
+import eventStore from './eventStore';
 
 export class CalendarStore {
   @observable
@@ -14,12 +15,14 @@ export class CalendarStore {
   loadEvents() {
     this.isLoading = true;
     const requestOptions = { url: this.baseUrl };
-    return apiFetch(requestOptions).then(
-      action(data => {
-        this.events = data;
-        this.isLoading = false;
-      })
-    ).catch(error => apiError(error));
+    return apiFetch(requestOptions)
+      .then(
+        action(data => {
+          this.events = data;
+          this.isLoading = false;
+        })
+      )
+      .catch(error => apiError(error));
   }
 
   @action
@@ -30,13 +33,15 @@ export class CalendarStore {
       method: 'POST',
       body: event
     };
-    return apiFetch(requestOptions).then(
-      action(() => {
-        this.isLoading = false;
-        this.loadEvents();
-        eventStore.resetEvent();
-      })
-    ).catch(error => apiError(error));
+    return apiFetch(requestOptions)
+      .then(
+        action(() => {
+          this.isLoading = false;
+          this.loadEvents();
+          eventStore.resetEvent();
+        })
+      )
+      .catch(error => apiError(error));
   }
 
   @action
@@ -47,13 +52,15 @@ export class CalendarStore {
       method: 'PUT',
       body: event
     };
-    return apiFetch(requestOptions).then(
-      action(() => {
-        this.isLoading = false;
-        this.loadEvents();
-        eventStore.resetEvent();
-      })
-    ).catch(error => apiError(error));
+    return apiFetch(requestOptions)
+      .then(
+        action(() => {
+          this.isLoading = false;
+          this.loadEvents();
+          eventStore.resetEvent();
+        })
+      )
+      .catch(error => apiError(error));
   }
 
   @action
@@ -64,15 +71,17 @@ export class CalendarStore {
       method: 'DELETE',
       body: { id }
     };
-    return apiFetch(requestOptions).then(
-      action(() => {
-        const item = this.events.find(item => +id === item.id);
-        this.events.remove(item);
-        this.loadEvents(); // added to filter the eliminated event from the calendar
-        eventStore.resetEvent();
-        this.isLoading = false;
-      })
-    ).catch(error => apiError(error));
+    return apiFetch(requestOptions)
+      .then(
+        action(() => {
+          const item = this.events.find(item => +id === item.id);
+          this.events.remove(item);
+          this.loadEvents(); // added to filter the eliminated event from the calendar
+          eventStore.resetEvent();
+          this.isLoading = false;
+        })
+      )
+      .catch(error => apiError(error));
   }
 }
 

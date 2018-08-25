@@ -7,7 +7,7 @@ import './EventDetail.css';
 
 @inject('calendarStore', 'eventStore')
 @observer
-class EventDetail extends Component {
+export default class EventDetail extends Component {
   componentWillMount() {
     const { eventId } = this.props.match.params;
     this.props.eventStore.set_id(eventId);
@@ -94,5 +94,3 @@ class EventDetail extends Component {
     );
   }
 }
-
-export default EventDetail;

@@ -12,7 +12,7 @@ import Selectable from './CalendarEvents';
 import './App.css';
 
 @observer
-class App extends Component {
+export default class App extends Component {
   render() {
     return (
       <Router>
@@ -30,5 +30,3 @@ class App extends Component {
     );
   }
 }
-
-export default App;

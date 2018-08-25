@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
-import './Create.css';
 import { inject, observer } from 'mobx-react';
+
 import {
   formErrorHandler,
   formRequiredFieldHandler,
   formDatesHander
 } from '../helpers/formErrorHandler';
+import './Create.css';
 
 @inject('eventStore')
 @observer
-class Create extends Component {
+export default class Create extends Component {
   state = {
     touched: {
       title: false,
@@ -29,13 +30,14 @@ class Create extends Component {
   handleChangeDescription = e =>
     this.props.eventStore.setDescription(e.target.value);
 
-  handleChangeStartTime = e => this.props.eventStore.setStartTime(e.target.value);
+  handleChangeStartTime = e =>
+    this.props.eventStore.setStartTime(e.target.value);
 
   handleChangeEndTime = e => this.props.eventStore.setEndTime(e.target.value);
 
   toggleLocalAllDay = () => {
     this.props.eventStore.toggleAllDay();
-    const { allDay, startTime } = this.props.eventStore
+    const { allDay, startTime } = this.props.eventStore;
     if (allDay) this.props.eventStore.setEndTime(startTime);
   };
 
@@ -52,24 +54,24 @@ class Create extends Component {
 
   handleFieldErrorMessage = (inputProperty, field) => {
     return this.state.touched[inputProperty] &&
-      formRequiredFieldHandler(field) ? (
+      formRequiredFieldHandler(field) && (
       <p className="required">This field is required</p>
-    ) : null;
+    );
   };
 
   handleDatesErrorMessage = (startTime, endTime) => {
     return formDatesHander(startTime, endTime) &&
-      this.state.touched['endTime'] ? (
+      this.state.touched['endTime'] && (
       <p className="required">
-        End date and time should be after start date and time
+        End date and time should be later then start date and time
       </p>
-    ) : null;
+    );
   };
 
   renderAllDay = () => {
     const { startTime } = this.props.eventStore;
     let { allDay } = this.props.eventStore;
-    return startTime ? (
+    return startTime && (
       <div>
         <input
           type="checkbox"
@@ -80,8 +82,8 @@ class Create extends Component {
         />
         <label>All day</label>
       </div>
-    ) : null
-  }
+    );
+  };
 
   render() {
     const { title, description, startTime, endTime } = this.props.eventStore;
@@ -150,5 +152,3 @@ class Create extends Component {
     );
   }
 }
-
-export default Create;

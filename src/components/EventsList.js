@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { inject, observer, PropTypes as mobxPropTypes } from 'mobx-react';
 import { Link } from 'react-router-dom';
+
 import EventItem from './EventItem';
 
 import { PropTypes } from 'prop-types';
@@ -9,7 +10,7 @@ import './EventList.css';
 
 @inject('calendarStore')
 @observer
-class EventsList extends Component {
+export default class EventsList extends Component {
   static propTypes = {
     events: mobxPropTypes.observableArray,
     loadEvents: PropTypes.func
@@ -42,5 +43,3 @@ class EventsList extends Component {
     );
   }
 }
-
-export default EventsList;

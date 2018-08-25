@@ -5,7 +5,17 @@ import moment from 'moment';
 
 import './EventItem.css'
 
-const EventItem = props => {
+EventItem.propTypes = {
+  event: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    title: PropTypes.string.isRequired,
+    description: PropTypes.string,
+    startTime: PropTypes.string.isRequired,
+    endTime: PropTypes.string.isRequired
+  })
+};
+
+function EventItem(props) {
   const { event } = props;
   return (
     <Link
@@ -26,14 +36,5 @@ const EventItem = props => {
   );
 };
 
-EventItem.propTypes = {
-  event: PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    title: PropTypes.string.isRequired,
-    description: PropTypes.string,
-    startTime: PropTypes.string.isRequired,
-    endTime: PropTypes.string.isRequired
-  })
-};
 
 export default EventItem;
