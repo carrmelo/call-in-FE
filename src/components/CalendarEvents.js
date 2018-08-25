@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-import moment from 'moment';
+import { observer, inject } from 'mobx-react';
 import BigCalendar from 'react-big-calendar';
+import moment from 'moment';
 
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import './CalendarEvents.css';
-import { observer, inject } from 'mobx-react';
 
 const propTypes = {};
 

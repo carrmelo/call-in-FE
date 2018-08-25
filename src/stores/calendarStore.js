@@ -1,6 +1,7 @@
 import { observable, action } from 'mobx';
-import eventStore from './eventStore';
+
 import { apiFetch, apiError } from '../helpers/api';
+import eventStore from './eventStore';
 
 export class CalendarStore {
   @observable
