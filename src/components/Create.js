@@ -25,11 +25,34 @@ class Create extends Component {
   };
 
   handleChangeTitle = e => this.props.eventStore.setTitle(e.target.value);
+
   handleChangeDescription = e =>
     this.props.eventStore.setDescription(e.target.value);
-  handleChangeStartTime = e =>
+
+  handleChangeStartTime = e => {
+    console.log(this.props.eventStore.startTime);
+    const tryout = new Date(this.props.eventStore.startTime);
+    console.log(tryout.getTime());
+    console.log(tryout);
+
     this.props.eventStore.setStartTime(e.target.value);
+  };
+
   handleChangeEndTime = e => this.props.eventStore.setEndTime(e.target.value);
+
+  toggleLocalAllDay = () => {
+    this.props.eventStore.toggleAllDay();
+    const { allDay, startTime } = this.props.eventStore
+    if (allDay) {
+      console.log(startTime);
+      
+      const startDay = new Date(startTime).getDate()
+      const startMonth = new Date(startTime).getFullYear()
+      const startYear = new Date(startTime).getMonth()
+      console.log(startDay, startMonth, startYear);
+      this.props.eventStore.setEndTime(startTime);
+    }
+  };
 
   handleSubmit = e => {
     e.preventDefault();
@@ -50,8 +73,8 @@ class Create extends Component {
   };
 
   handleDatesErrorMessage = (startTime, endTime) => {
-    return this.state.touched['endTime'] &&
-      formDatesHander(startTime, endTime) ? (
+    return formDatesHander(startTime, endTime) &&
+      this.state.touched['endTime'] ? (
       <p className="required">
         End date and time should be after start date and time
       </p>
@@ -60,6 +83,8 @@ class Create extends Component {
 
   render() {
     const { title, description, startTime, endTime } = this.props.eventStore;
+    let { allDay } = this.props.eventStore;
+
     return (
       <form className="create_form_container">
         <button className="create__close" onClick={this.handleCloseButton}>
@@ -86,7 +111,7 @@ class Create extends Component {
           onChange={this.handleChangeDescription}
         />
         <label>Start:</label>
-        <div>
+        <div className="allDay">
           <input
             name="startTime"
             value={startTime}
@@ -94,11 +119,20 @@ class Create extends Component {
             onChange={this.handleChangeStartTime}
             onBlur={this.handleBlur('startTime')}
           />
-          <input type="checkbox" name="allDay" value="allDay" />
-          <label>Todo el día</label>
+          {startTime ? (
+            <div>
+              <input
+                type="checkbox"
+                name="allDay"
+                value="allDay"
+                checked={allDay}
+                onChange={this.toggleLocalAllDay}
+              />
+              <label>Todo el día</label>
+            </div>
+          ) : null}
         </div>
         {this.handleFieldErrorMessage('startTime', startTime)}
-
         <label>End:</label>
         <input
           name="endTime"
@@ -106,6 +140,7 @@ class Create extends Component {
           type="datetime-local"
           onChange={this.handleChangeEndTime}
           onBlur={this.handleBlur('endTime')}
+          disabled={allDay}
         />
         {this.handleFieldErrorMessage('endTime', endTime)}
         {this.handleDatesErrorMessage(startTime, endTime)}

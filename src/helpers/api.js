@@ -1,4 +1,4 @@
-export const apiFetch = requestOptions => {
+exports.apiFetch = requestOptions => {
   const { url, method, body } = requestOptions;
   return fetch(url, {
     method: method || 'GET',
@@ -11,7 +11,7 @@ export const apiFetch = requestOptions => {
   }).then(response => (response.status === 204 ? response : response.json()));
 };
 
-export const apiError = error => {
+exports.apiError = error => {
   console.error('---------', error);
   this.isLoading = false;
 };

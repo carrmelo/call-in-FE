@@ -15,7 +15,6 @@ class EventDetail extends Component {
 
   componentDidMount() {
     const { eventId } = this.props.match.params;
-
     this.props.eventStore.loadEvent(eventId);
   }
 
@@ -29,6 +28,7 @@ class EventDetail extends Component {
 
   handleCloseButton = () => {
     this.props.history.push('/');
+    this.props.eventStore.resetEvent();
   };
 
   handleDeleteButton = () => {

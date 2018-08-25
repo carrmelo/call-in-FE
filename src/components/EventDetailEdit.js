@@ -4,21 +4,43 @@ import { Link } from 'react-router-dom';
 import '../style/EventDetailEdit.css';
 import { inject, observer } from 'mobx-react';
 
+import {
+  formErrorHandler,
+  formRequiredFieldHandler,
+  formDatesHander
+} from '../helpers/formErrorHandler';
+
 @inject('eventStore')
 @observer
 class EventDetailEdit extends Component {
+  state = {
+    touched: {
+      title: false,
+      startTime: false,
+      endTime: false
+    }
+  };
+
+  handleBlur = field => e => {
+    this.setState({
+      touched: { ...this.state.touched, [field]: true }
+    });
+  };
+
   handleChangeTitle = e => this.props.eventStore.setTitle(e.target.value);
+
   handleChangeDescription = e =>
     this.props.eventStore.setDescription(e.target.value);
+
   handleChangeStartTime = e =>
     this.props.eventStore.setStartTime(e.target.value);
-  handleChangeEndTime = e => this.props.eventStore.setEndTime(e.target.value);
 
+  handleChangeEndTime = e => this.props.eventStore.setEndTime(e.target.value);
 
   handleSubmit = e => {
     e.preventDefault();
     this.props.eventStore.submitEvent();
-    this.handleCloseButton()
+    this.handleCloseButton();
   };
 
   handleCloseButton = () => {
@@ -26,10 +48,26 @@ class EventDetailEdit extends Component {
     this.props.eventStore.resetEvent();
   };
 
+  handleFieldErrorMessage = (inputProperty, field) => {
+    return this.state.touched[inputProperty] &&
+      formRequiredFieldHandler(field) ? (
+      <p className="required">This field is required</p>
+    ) : null;
+  };
+
+  handleDatesErrorMessage = (startTime, endTime) => {
+    return this.state.touched['endTime'] &&
+      formDatesHander(startTime, endTime) ? (
+      <p className="required">
+        End date and time should be after start date and time
+      </p>
+    ) : null;
+  };
+
   render() {
     const { eventId } = this.props.match.params;
     const { title, description, startTime, endTime } = this.props.eventStore;
-    
+
     return (
       <div className="event_detail__container">
         <button
@@ -48,7 +86,9 @@ class EventDetailEdit extends Component {
             type="text"
             placeholder={title}
             onChange={this.handleChangeTitle}
+            onBlur={this.handleBlur('title')}
           />
+          {this.handleFieldErrorMessage('title', title)}
           <input
             name="description"
             value={description}
@@ -61,13 +101,18 @@ class EventDetailEdit extends Component {
             value={startTime.substring(0, 16)}
             type="datetime-local"
             onChange={this.handleChangeStartTime}
+            onBlur={this.handleBlur('startTime')}
           />
+          {this.handleFieldErrorMessage('startTime', startTime)}
           <input
             name="endTime"
             value={endTime.substring(0, 16)}
             type="datetime-local"
             onChange={this.handleChangeEndTime}
+            onBlur={this.handleBlur('endTime')}
           />
+          {this.handleFieldErrorMessage('endTime', endTime)}
+          {this.handleDatesErrorMessage(startTime, endTime)}
         </div>
         <div className="event_detail_buttons__container">
           <Link to={eventId ? `/${eventId}` : '/'}>
@@ -77,7 +122,15 @@ class EventDetailEdit extends Component {
               </span>
             </button>
           </Link>
-          <button onClick={this.handleSubmit}>
+          <button
+            onClick={this.handleSubmit}
+            disabled={formErrorHandler(
+              formRequiredFieldHandler(title),
+              formDatesHander(startTime, endTime),
+              formRequiredFieldHandler(startTime),
+              formRequiredFieldHandler(endTime)
+            )}
+          >
             <span role="img" aria-labelledby="edit">
               ✅
             </span>

@@ -17,6 +17,8 @@ class EventStore {
   startTime = '';
   @observable
   endTime = '';
+  @observable
+  allDay = false;
 
   getEvent(event_id) {
     const event = calendarStore.events.filter(event => event.id === event_id);
@@ -97,6 +99,13 @@ class EventStore {
   @action
   setEndTime(endTime) {
     this.endTime = endTime;
+  }
+
+  @action
+  toggleAllDay() {
+    this.allDay = !this.allDay;
+    console.log(this.allDay);
+    
   }
 
   @action

@@ -16,10 +16,11 @@ class EventsList extends Component {
     const events = this.props.calendarStore.events;
     return events.length ? (
       events
-        .slice().sort((a, b) => a.startTime > b.startTime)
+        .slice()
+        .sort((a, b) => a.startTime > b.startTime)
         .map(event => <EventItem key={event.id} event={event} />)
     ) : (
-      <div>¡Estas libre!</div>
+      <div>You are free!</div>
     );
   }
 
