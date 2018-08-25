@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import '../style/Create.css';
+import './Create.css';
 import { inject, observer } from 'mobx-react';
 import {
   formErrorHandler,
@@ -29,14 +29,7 @@ class Create extends Component {
   handleChangeDescription = e =>
     this.props.eventStore.setDescription(e.target.value);
 
-  handleChangeStartTime = e => {
-    console.log(this.props.eventStore.startTime);
-    const tryout = new Date(this.props.eventStore.startTime);
-    console.log(tryout.getTime());
-    console.log(tryout);
-
-    this.props.eventStore.setStartTime(e.target.value);
-  };
+  handleChangeStartTime = e => this.props.eventStore.setStartTime(e.target.value);
 
   handleChangeEndTime = e => this.props.eventStore.setEndTime(e.target.value);
 
@@ -72,6 +65,23 @@ class Create extends Component {
       </p>
     ) : null;
   };
+
+  renderAllDay = () => {
+    const { startTime } = this.props.eventStore;
+    let { allDay } = this.props.eventStore;
+    return startTime ? (
+      <div>
+        <input
+          type="checkbox"
+          name="allDay"
+          value="allDay"
+          checked={allDay}
+          onChange={this.toggleLocalAllDay}
+        />
+        <label>All day</label>
+      </div>
+    ) : null
+  }
 
   render() {
     const { title, description, startTime, endTime } = this.props.eventStore;
@@ -111,18 +121,7 @@ class Create extends Component {
             onChange={this.handleChangeStartTime}
             onBlur={this.handleBlur('startTime')}
           />
-          {startTime ? (
-            <div>
-              <input
-                type="checkbox"
-                name="allDay"
-                value="allDay"
-                checked={allDay}
-                onChange={this.toggleLocalAllDay}
-              />
-              <label>Todo el día</label>
-            </div>
-          ) : null}
+          {this.renderAllDay()}
         </div>
         {this.handleFieldErrorMessage('startTime', startTime)}
         <label>End:</label>

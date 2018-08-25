@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
-import '../style/EventDetailEdit.css';
+import './EventDetailEdit.css';
 import { inject, observer } from 'mobx-react';
 
 import {
@@ -37,6 +37,12 @@ class EventDetailEdit extends Component {
 
   handleChangeEndTime = e => this.props.eventStore.setEndTime(e.target.value);
 
+  toggleLocalAllDay = () => {
+    this.props.eventStore.toggleAllDay();
+    const { allDay, startTime } = this.props.eventStore
+    if (allDay) this.props.eventStore.setEndTime(startTime);
+  };
+
   handleSubmit = e => {
     e.preventDefault();
     this.props.eventStore.submitEvent();
@@ -56,7 +62,7 @@ class EventDetailEdit extends Component {
   };
 
   handleDatesErrorMessage = (startTime, endTime) => {
-    return this.state.touched['endTime'] &&
+    return (this.state.touched['startTime'] || this.state.touched['endTime']) &&
       formDatesHander(startTime, endTime) ? (
       <p className="required">
         End date and time should be after start date and time
@@ -64,9 +70,26 @@ class EventDetailEdit extends Component {
     ) : null;
   };
 
+  renderAllDay = () => {
+    const { startTime } = this.props.eventStore;
+    let { allDay } = this.props.eventStore;
+    return startTime ? (
+      <div>
+        <input
+          type="checkbox"
+          name="allDay"
+          value="allDay"
+          checked={allDay}
+          onChange={this.toggleLocalAllDay}
+        />
+        <label>All day</label>
+      </div>
+    ) : null;
+  };
+
   render() {
     const { eventId } = this.props.match.params;
-    const { title, description, startTime, endTime } = this.props.eventStore;
+    const { title, description, startTime, endTime, allDay } = this.props.eventStore;
 
     return (
       <div className="event_detail__container">
@@ -96,13 +119,16 @@ class EventDetailEdit extends Component {
             placeholder={description}
             onChange={this.handleChangeDescription}
           />
-          <input
-            name="startTime"
-            value={startTime.substring(0, 16)}
-            type="datetime-local"
-            onChange={this.handleChangeStartTime}
-            onBlur={this.handleBlur('startTime')}
-          />
+          <div className="allDay">
+            <input
+              name="startTime"
+              value={startTime.substring(0, 16)}
+              type="datetime-local"
+              onChange={this.handleChangeStartTime}
+              onBlur={this.handleBlur('startTime')}
+            />
+            {this.renderAllDay()}
+          </div>
           {this.handleFieldErrorMessage('startTime', startTime)}
           <input
             name="endTime"
@@ -110,6 +136,7 @@ class EventDetailEdit extends Component {
             type="datetime-local"
             onChange={this.handleChangeEndTime}
             onBlur={this.handleBlur('endTime')}
+            disabled={allDay}
           />
           {this.handleFieldErrorMessage('endTime', endTime)}
           {this.handleDatesErrorMessage(startTime, endTime)}

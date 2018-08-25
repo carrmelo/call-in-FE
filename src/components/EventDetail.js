@@ -3,7 +3,7 @@ import { inject, observer } from 'mobx-react';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
 
-import '../style/EventDetail.css';
+import './EventDetail.css';
 
 @inject('calendarStore', 'eventStore')
 @observer
