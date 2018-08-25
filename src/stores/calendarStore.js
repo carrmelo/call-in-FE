@@ -1,6 +1,6 @@
 import { observable, action } from 'mobx';
 import eventStore from './eventStore';
-import { apiFetch, apiError } from '../helpers/api';
+import { apiFetch } from '../helpers/api';
 
 export class CalendarStore {
   @observable
@@ -19,7 +19,10 @@ export class CalendarStore {
         this.events = data;
         this.isLoading = false;
       })
-    ).catch(error => apiError(error));
+    ).catch(error => {
+      console.error('---------', error);
+      this.isLoading = false;
+    });
   }
 
   @action
@@ -36,7 +39,10 @@ export class CalendarStore {
         this.loadEvents();
         eventStore.resetEvent();
       })
-    ).catch(error => apiError(error));
+    ).catch(error => {
+      console.error('---------', error);
+      this.isLoading = false;
+    });
   }
 
   @action
@@ -53,7 +59,10 @@ export class CalendarStore {
         this.loadEvents();
         eventStore.resetEvent();
       })
-    ).catch(error => apiError(error));
+    ).catch(error => {
+      console.error('---------', error);
+      this.isLoading = false;
+    });
   }
 
   @action
@@ -72,7 +81,10 @@ export class CalendarStore {
         eventStore.resetEvent();
         this.isLoading = false;
       })
-    ).catch(error => apiError(error));
+    ).catch(error => {
+      console.error('---------', error);
+      this.isLoading = false;
+    });
   }
 }
 

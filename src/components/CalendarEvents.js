@@ -1,3 +1,5 @@
+// @flow
+
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import moment from 'moment';
@@ -11,11 +13,23 @@ const propTypes = {};
 
 const localizer = BigCalendar.setLocalizer(BigCalendar.momentLocalizer(moment));
 
+type Props = {
+  calendarStore: {
+    loadEvents: () => Array<{}>
+  },
+  eventStore: {
+    loadStartAndEndTime: (string, string) => void
+  },
+  history: any
+}
+
 @inject('calendarStore', 'eventStore')
 @withRouter
 @observer
-class Selectable extends Component {
+class Selectable extends Component<Props> {
   componentDidMount() {
+    console.log(this.props.history);
+    
     this.props.calendarStore.loadEvents();
   }
 

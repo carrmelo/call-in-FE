@@ -1,7 +1,7 @@
 import { observable, action } from 'mobx';
 
 import calendarStore from './calendarStore';
-import { apiFetch, apiError } from '../helpers/api';
+import { apiFetch } from '../helpers/api';
 
 class EventStore {
   @observable
@@ -69,7 +69,10 @@ class EventStore {
             this.isLoading = false;
           })
         )
-        .catch(error => apiError(error));
+        .catch(error => {
+          console.error('---------', error);
+          this.isLoading = false;
+        });
     } else return event;
   }
 
