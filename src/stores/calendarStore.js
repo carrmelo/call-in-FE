@@ -1,4 +1,4 @@
-import { observable, action } from 'mobx';
+import { observable, action, computed } from 'mobx';
 
 import { apiFetch, apiError } from '../helpers/api';
 import eventStore from './eventStore';
@@ -7,9 +7,14 @@ export class CalendarStore {
   @observable
   isLoading = false;
   @observable
-  events = [];
+  eventsMap = observable.map();
+  // events = [];
 
   baseUrl = 'http://localhost:3000/events';
+
+  @computed get events() {
+    return Array.from(this.eventsMap.values());
+  }
 
   @action
   loadEvents() {
@@ -17,8 +22,9 @@ export class CalendarStore {
     const requestOptions = { url: this.baseUrl };
     return apiFetch(requestOptions)
       .then(
-        action(data => {
-          this.events = data;
+        action((events) => {
+          this.eventsMap.clear()
+          events.forEach(event => this.eventsMap.set(event.id, event));
           this.isLoading = false;
         })
       )
