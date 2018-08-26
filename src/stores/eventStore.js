@@ -51,6 +51,8 @@ export class EventStore {
   loadStartAndEndTime(start, end) {    
     this.startTime = toCorrectDate(start).substring(0, 16);
     this.endTime = toCorrectDate(end).substring(0, 16);
+    console.log(typeof this.endTime);
+    
   }
 
   @action
