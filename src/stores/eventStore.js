@@ -21,13 +21,14 @@ export class EventStore {
   allDay = false;
 
   getEvent(event_id) {
-    const event = calendarStore.events.filter(event => event.id === event_id);
-    if (event.length) {
-      this.id = event[0].id;
-      this.title = event[0].title;
-      this.description = event[0].description;
-      this.startTime = event[0].startTime;
-      this.endTime = event[0].endTime;
+    const event = calendarStore.eventsMap.get(+event_id);
+    if (event) {
+      this.id = event.id;
+      this.title = event.title;
+      this.description = event.description;
+      this.startTime = event.startTime;
+      this.endTime = event.endTime;
+      return event;
     }
   }
 
@@ -53,8 +54,10 @@ export class EventStore {
 
   @action
   loadEvent(id) {
-    const event = this.getEvent(id);
+    const event = this.getEvent(+id);
     if (!event) {
+      console.log('entre');
+
       this.isLoading = true;
       const requestOptions = { url: `http://localhost:3000/events/${id}` };
       return apiFetch(requestOptions)
