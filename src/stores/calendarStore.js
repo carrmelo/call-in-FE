@@ -37,10 +37,9 @@ export class CalendarStore {
       .then(
         action((data) => {
           this.isLoading = false;
-          this.events.push(data);
+          this.events.push(data); // updates list alone.          
+          this.loadEvents(); // adds the new event in the calendar (not reacting to array.push)
           console.log(this.events);
-          
-          // this.loadEvents();
           eventStore.resetEvent();
         })
       )
@@ -57,9 +56,12 @@ export class CalendarStore {
     };
     return apiFetch(requestOptions)
       .then(
-        action(() => {
+        action((data) => {
+          const item = this.events.find(item => +id === item.id);
+          this.events.remove(item);
+          this.events.push(data);
           this.isLoading = false;
-          this.loadEvents();
+          this.loadEvents(); // replace the edited event in the calendar
           eventStore.resetEvent();
         })
       )
@@ -79,9 +81,9 @@ export class CalendarStore {
         action(() => {
           const item = this.events.find(item => +id === item.id);
           this.events.remove(item);
-          this.loadEvents(); // added to filter the eliminated event from the calendar
-          eventStore.resetEvent();
           this.isLoading = false;
+          this.loadEvents(); // filters the eliminated event from the calendar
+          eventStore.resetEvent();
         })
       )
       .catch(error => apiError(error));
