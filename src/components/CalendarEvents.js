@@ -12,7 +12,7 @@ const localizer = BigCalendar.setLocalizer(BigCalendar.momentLocalizer(moment));
 @inject('calendarStore', 'eventStore')
 @withRouter
 @observer
-export default class Selectable extends Component {
+export default class CalendarEvents extends Component {
   componentDidMount() {
     this.props.calendarStore.loadEvents();
   }

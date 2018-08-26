@@ -7,7 +7,7 @@ import Create from './Create';
 import EventsList from './EventsList';
 import EventDetail from './EventDetail';
 import EventDetailEdit from './EventDetailEdit';
-import Selectable from './CalendarEvents';
+import CalendarEvents from './CalendarEvents';
 
 import './App.css';
 
@@ -24,7 +24,7 @@ export default class App extends Component {
             <Route exact path="/edit/:eventId" component={EventDetailEdit} />
           </Switch>
           <EventsList />
-          <Selectable />
+          <CalendarEvents />
         </div>
       </Router>
     );
