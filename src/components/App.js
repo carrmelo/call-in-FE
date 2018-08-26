@@ -1,16 +1,32 @@
 import React, { Component } from 'react';
-import Create from './Create'
-// import logo from './logo.svg';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { observer } from 'mobx-react';
+import DevTools from 'mobx-react-devtools';
+
+import Create from './Create';
+import EventsList from './EventsList';
+import EventDetail from './EventDetail';
+import EventDetailEdit from './EventDetailEdit';
+import CalendarEvents from './CalendarEvents';
+
 import './App.css';
 
-class App extends Component {
+@observer
+export default class App extends Component {
   render() {
     return (
-      <div className="App">
-        <Create />
-      </div>
+      <Router>
+        <div className="App">
+          <DevTools />
+          <Switch>
+            <Route exact path="/create" component={Create} />
+            <Route exact path="/:eventId" component={EventDetail} />
+            <Route exact path="/edit/:eventId" component={EventDetailEdit} />
+          </Switch>
+          <EventsList />
+          <CalendarEvents />
+        </div>
+      </Router>
     );
   }
 }
-
-export default App;

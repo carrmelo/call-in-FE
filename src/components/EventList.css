@@ -1,0 +1,7 @@
+.event_list__container {
+  height: 60vh;
+  display: flex;
+  flex-direction: column;
+  text-align: right;
+  overflow: scroll;
+}
