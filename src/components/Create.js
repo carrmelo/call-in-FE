@@ -27,18 +27,16 @@ export default class Create extends Component {
 
   handleChangeTitle = e => this.props.eventStore.setTitle(e.target.value);
 
-  handleChangeDescription = e =>
-    this.props.eventStore.setDescription(e.target.value);
+  handleChangeDescription = e => this.props.eventStore.setDescription(e.target.value);
 
-  handleChangeStartTime = e =>
-    this.props.eventStore.setStartTime(e.target.value);
+  handleChangeStartTime = e => this.props.eventStore.setStartTime(e.target.value);
 
   handleChangeEndTime = e => this.props.eventStore.setEndTime(e.target.value);
 
   toggleLocalAllDay = () => {
     this.props.eventStore.toggleAllDay();
-    const { allDay, startTime } = this.props.eventStore;
-    if (allDay) this.props.eventStore.setEndTime(startTime);
+    const { allDay, startTime, setEndTime } = this.props.eventStore;
+    if (allDay) setEndTime(startTime);
   };
 
   handleSubmit = e => {
@@ -53,35 +51,41 @@ export default class Create extends Component {
   };
 
   handleFieldErrorMessage = (inputProperty, field) => {
-    return this.state.touched[inputProperty] &&
+    return (
+      this.state.touched[inputProperty] &&
       formRequiredFieldHandler(field) && (
-      <p className="required">This field is required</p>
+        <p className="required">This field is required</p>
+      )
     );
   };
 
   handleDatesErrorMessage = (startTime, endTime) => {
-    return formDatesHander(startTime, endTime) &&
+    return (
+      formDatesHander(startTime, endTime) &&
       this.state.touched['endTime'] && (
-      <p className="required">
-        End date and time should be later than start date and time
-      </p>
+        <p className="required">
+          End date and time should be later than start date and time
+        </p>
+      )
     );
   };
 
   renderAllDay = () => {
     const { startTime } = this.props.eventStore;
     let { allDay } = this.props.eventStore;
-    return startTime && (
-      <div>
-        <input
-          type="checkbox"
-          name="allDay"
-          value="allDay"
-          checked={allDay}
-          onChange={this.toggleLocalAllDay}
-        />
-        <label>All day</label>
-      </div>
+    return (
+      startTime && (
+        <div>
+          <input
+            type="checkbox"
+            name="allDay"
+            value="allDay"
+            checked={allDay}
+            onChange={this.toggleLocalAllDay}
+          />
+          <label>All day</label>
+        </div>
+      )
     );
   };
 

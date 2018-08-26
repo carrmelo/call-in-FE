@@ -28,11 +28,9 @@ export default class EventDetailEdit extends Component {
 
   handleChangeTitle = e => this.props.eventStore.setTitle(e.target.value);
 
-  handleChangeDescription = e =>
-    this.props.eventStore.setDescription(e.target.value);
+  handleChangeDescription = e => this.props.eventStore.setDescription(e.target.value);
 
-  handleChangeStartTime = e =>
-    this.props.eventStore.setStartTime(e.target.value);
+  handleChangeStartTime = e => this.props.eventStore.setStartTime(e.target.value);
 
   handleChangeEndTime = e => this.props.eventStore.setEndTime(e.target.value);
 

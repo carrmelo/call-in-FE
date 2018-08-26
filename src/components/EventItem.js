@@ -4,8 +4,7 @@ import moment from 'moment';
 
 import './EventItem.css';
 
-function EventItem(props) {
-  const { event } = props;
+function EventItem({ event }) {
   return (
     <Link
       to={{

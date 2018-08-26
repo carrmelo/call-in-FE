@@ -5,21 +5,14 @@ import { apiFetch, apiError } from '../helpers/api';
 import { toCorrectDate } from '../helpers/correctDateTime';
 
 export class EventStore {
-  @observable
-  isLoading = false;
+  @observable isLoading = false;
 
-  @observable
-  id = '';
-  @observable
-  title = '';
-  @observable
-  description = '';
-  @observable
-  startTime = '';
-  @observable
-  endTime = '';
-  @observable
-  allDay = false;
+  @observable id = '';
+  @observable title = '';
+  @observable description = '';
+  @observable startTime = '';
+  @observable endTime = '';
+  @observable allDay = false;
 
   getEvent(event_id) {
     const event = calendarStore.eventsMap.get(+event_id);
@@ -48,11 +41,9 @@ export class EventStore {
   }
 
   @action
-  loadStartAndEndTime(start, end) {    
+  loadStartAndEndTime(start, end) {
     this.startTime = toCorrectDate(start).substring(0, 16);
     this.endTime = toCorrectDate(end).substring(0, 16);
-    console.log(typeof this.endTime);
-    
   }
 
   @action
