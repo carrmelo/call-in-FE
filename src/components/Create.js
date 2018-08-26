@@ -63,7 +63,7 @@ export default class Create extends Component {
     return formDatesHander(startTime, endTime) &&
       this.state.touched['endTime'] && (
       <p className="required">
-        End date and time should be later then start date and time
+        End date and time should be later than start date and time
       </p>
     );
   };
