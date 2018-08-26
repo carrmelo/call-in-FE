@@ -8,7 +8,6 @@ export class CalendarStore {
   isLoading = false;
   @observable
   eventsMap = observable.map();
-  // events = [];
 
   baseUrl = 'http://localhost:3000/events';
 

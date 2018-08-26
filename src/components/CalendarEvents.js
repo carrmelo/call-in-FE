@@ -7,8 +7,6 @@ import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import './CalendarEvents.css';
 
-const propTypes = {};
-
 const localizer = BigCalendar.setLocalizer(BigCalendar.momentLocalizer(moment));
 
 @inject('calendarStore', 'eventStore')
@@ -48,5 +46,3 @@ export default class Selectable extends Component {
     );
   }
 }
-
-Selectable.propTypes = propTypes;
