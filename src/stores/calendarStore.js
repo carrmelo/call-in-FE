@@ -12,7 +12,8 @@ export class CalendarStore {
 
   baseUrl = 'http://localhost:3000/events';
 
-  @computed get events() {
+  @computed
+  get events() {
     return Array.from(this.eventsMap.values());
   }
 
@@ -22,8 +23,8 @@ export class CalendarStore {
     const requestOptions = { url: this.baseUrl };
     return apiFetch(requestOptions)
       .then(
-        action((events) => {
-          this.eventsMap.clear()
+        action(events => {
+          this.eventsMap.clear();
           events.forEach(event => this.eventsMap.set(event.id, event));
           this.isLoading = false;
         })
@@ -41,12 +42,11 @@ export class CalendarStore {
     };
     return apiFetch(requestOptions)
       .then(
-        action((data) => {
+        action(event => {
           this.isLoading = false;
-          this.events.push(data); // updates list alone.          
-          this.loadEvents(); // adds the new event in the calendar (not reacting to array.push)
-          console.log(this.events);
+          this.eventsMap.set(event.id, event);
           eventStore.resetEvent();
+          return event;
         })
       )
       .catch(error => apiError(error));
@@ -62,13 +62,11 @@ export class CalendarStore {
     };
     return apiFetch(requestOptions)
       .then(
-        action((data) => {
-          const item = this.events.find(item => +id === item.id);
-          this.events.remove(item);
-          this.events.push(data);
+        action(event => {
+          this.eventsMap.set(event.id, event);
           this.isLoading = false;
-          this.loadEvents(); // replace the edited event in the calendar
           eventStore.resetEvent();
+          return event;
         })
       )
       .catch(error => apiError(error));
@@ -85,11 +83,10 @@ export class CalendarStore {
     return apiFetch(requestOptions)
       .then(
         action(() => {
-          const item = this.events.find(item => +id === item.id);
-          this.events.remove(item);
+          this.eventsMap.delete(+id);
           this.isLoading = false;
-          this.loadEvents(); // filters the eliminated event from the calendar
           eventStore.resetEvent();
+          return true;
         })
       )
       .catch(error => apiError(error));
