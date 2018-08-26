@@ -4,10 +4,8 @@ import { apiFetch, apiError } from '../helpers/api';
 import eventStore from './eventStore';
 
 export class CalendarStore {
-  @observable
-  isLoading = false;
-  @observable
-  eventsMap = observable.map();
+  @observable isLoading = false;
+  @observable eventsMap = observable.map();
 
   @computed
   get events() {
