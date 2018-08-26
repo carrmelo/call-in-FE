@@ -56,8 +56,6 @@ export class EventStore {
   loadEvent(id) {
     const event = this.getEvent(+id);
     if (!event) {
-      console.log('entre');
-
       this.isLoading = true;
       const requestOptions = { url: `http://localhost:3000/events/${id}` };
       return apiFetch(requestOptions)
