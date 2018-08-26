@@ -9,8 +9,6 @@ export class CalendarStore {
   @observable
   eventsMap = observable.map();
 
-  baseUrl = 'http://localhost:3000/events';
-
   @computed
   get events() {
     return Array.from(this.eventsMap.values());
@@ -19,7 +17,7 @@ export class CalendarStore {
   @action
   loadEvents() {
     this.isLoading = true;
-    const requestOptions = { url: this.baseUrl };
+    const requestOptions = { url: `${process.env.REACT_APP_SERVER_URL}` };
     return apiFetch(requestOptions)
       .then(
         action(events => {
@@ -35,7 +33,7 @@ export class CalendarStore {
   createEvent(event) {
     this.isLoading = true;
     const requestOptions = {
-      url: this.baseUrl,
+      url: `${process.env.REACT_APP_SERVER_URL}`,
       method: 'POST',
       body: event
     };
@@ -55,7 +53,7 @@ export class CalendarStore {
   updateEvent(event, id) {
     this.isLoading = true;
     const requestOptions = {
-      url: `${this.baseUrl}/${id}`,
+      url: `${process.env.REACT_APP_SERVER_URL}/${id}`,
       method: 'PUT',
       body: event
     };
@@ -75,7 +73,7 @@ export class CalendarStore {
   deleteEvent(id) {
     this.isLoading = true;
     const requestOptions = {
-      url: `${this.baseUrl}/${id}`,
+      url: `${process.env.REACT_APP_SERVER_URL}/${id}`,
       method: 'DELETE',
       body: { id }
     };
