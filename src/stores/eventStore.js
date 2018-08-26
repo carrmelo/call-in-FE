@@ -57,7 +57,7 @@ export class EventStore {
     const event = this.getEvent(+id);
     if (!event) {
       this.isLoading = true;
-      const requestOptions = { url: `${process.env.REACT_APP_SERVER_URL}/${id}` };
+      const requestOptions = { url: `${process.env.REACT_APP_API_HOST}/${id}` };
       return apiFetch(requestOptions)
         .then(
           action(data => {

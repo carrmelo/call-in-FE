@@ -17,7 +17,7 @@ export class CalendarStore {
   @action
   loadEvents() {
     this.isLoading = true;
-    const requestOptions = { url: `${process.env.REACT_APP_SERVER_URL}` };
+    const requestOptions = { url: `${process.env.REACT_APP_API_HOST}` };
     return apiFetch(requestOptions)
       .then(
         action(events => {
@@ -33,7 +33,7 @@ export class CalendarStore {
   createEvent(event) {
     this.isLoading = true;
     const requestOptions = {
-      url: `${process.env.REACT_APP_SERVER_URL}`,
+      url: `${process.env.REACT_APP_API_HOST}`,
       method: 'POST',
       body: event
     };
@@ -53,7 +53,7 @@ export class CalendarStore {
   updateEvent(event, id) {
     this.isLoading = true;
     const requestOptions = {
-      url: `${process.env.REACT_APP_SERVER_URL}/${id}`,
+      url: `${process.env.REACT_APP_API_HOST}/${id}`,
       method: 'PUT',
       body: event
     };
@@ -73,7 +73,7 @@ export class CalendarStore {
   deleteEvent(id) {
     this.isLoading = true;
     const requestOptions = {
-      url: `${process.env.REACT_APP_SERVER_URL}/${id}`,
+      url: `${process.env.REACT_APP_API_HOST}/${id}`,
       method: 'DELETE',
       body: { id }
     };
