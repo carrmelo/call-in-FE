@@ -2,6 +2,7 @@ import { observable, action } from 'mobx';
 
 import calendarStore from './calendarStore';
 import { apiFetch, apiError } from '../helpers/api';
+import { toCorrectDate } from '../helpers/correctDateTime';
 
 export class EventStore {
   @observable
@@ -47,9 +48,9 @@ export class EventStore {
   }
 
   @action
-  loadStartAndEndTime(start, end) {
-    this.startTime = start.toISOString().substring(0, 16);
-    this.endTime = end.toISOString().substring(0, 16);
+  loadStartAndEndTime(start, end) {    
+    this.startTime = toCorrectDate(start).substring(0, 16);
+    this.endTime = toCorrectDate(end).substring(0, 16);
   }
 
   @action
