@@ -35,9 +35,12 @@ export class CalendarStore {
     };
     return apiFetch(requestOptions)
       .then(
-        action(() => {
+        action((data) => {
           this.isLoading = false;
-          this.loadEvents();
+          this.events.push(data);
+          console.log(this.events);
+          
+          // this.loadEvents();
           eventStore.resetEvent();
         })
       )

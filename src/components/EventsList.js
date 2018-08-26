@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { inject, observer, PropTypes as mobxPropTypes } from 'mobx-react';
 import { Link } from 'react-router-dom';
+import { PropTypes } from 'prop-types';
 
 import EventItem from './EventItem';
 
-import { PropTypes } from 'prop-types';
 
 import './EventList.css';
 
@@ -14,7 +14,7 @@ export default class EventsList extends Component {
   static propTypes = {
     events: mobxPropTypes.observableArray,
     loadEvents: PropTypes.func
-  }
+  };
 
   componentDidMount() {
     this.props.calendarStore.loadEvents();
@@ -22,11 +22,20 @@ export default class EventsList extends Component {
 
   renderEventItem() {
     const events = this.props.calendarStore.events;
+    
     return events.length ? (
       events
         .slice()
-        .sort((a, b) => a.startTime > b.startTime)
-        .map(event => <EventItem key={event.id} event={event} />)
+        .sort((a, b) => {
+          const c = new Date(a.startTime)
+          const d = new Date(b.startTime)
+          return c.getTime() - d.getTime() // hot fix after array.sort() stopped working in a large array of dates
+        })
+        .map(event => {
+          console.log(event.startTime);
+
+          return <EventItem key={event.id} event={event} />;
+        })
     ) : (
       <div>You are free!</div>
     );
