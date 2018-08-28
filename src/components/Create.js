@@ -28,7 +28,7 @@ export default class Create extends Component {
   handleChange = e =>
     this.props.eventStore.setEventProperty(e.target.name, e.target.value);
 
-  toggleComponentAllDay = () => {
+  handleToggleAllDay = () => {
     this.props.eventStore.toggleAllDay();
     const { allDay, startTime } = this.props.eventStore;
     if (allDay) this.props.eventStore.setEventProperty('endTime', startTime);
@@ -76,7 +76,7 @@ export default class Create extends Component {
             name="allDay"
             value="allDay"
             checked={allDay}
-            onChange={this.toggleComponentAllDay}
+            onChange={this.handleToggleAllDay}
           />
           <label>All day</label>
         </div>
