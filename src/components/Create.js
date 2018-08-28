@@ -45,7 +45,7 @@ export default class Create extends Component {
     this.props.eventStore.resetEvent();
   };
 
-  handleFieldErrorMessage = (inputProperty, field) => {
+  renderFieldErrorMessage = (inputProperty, field) => {
     return (
       this.state.touched[inputProperty] &&
       formRequiredFieldHandler(field) && (
@@ -54,7 +54,7 @@ export default class Create extends Component {
     );
   };
 
-  handleDatesErrorMessage = (startTime, endTime) => {
+  renderDatesErrorMessage = (startTime, endTime) => {
     return (
       formDatesHander(startTime, endTime) &&
       this.state.touched['endTime'] && (
@@ -124,7 +124,7 @@ export default class Create extends Component {
           />
           {this.renderAllDay()}
         </div>
-        {this.handleFieldErrorMessage('startTime', startTime)}
+        {this.renderFieldErrorMessage('startTime', startTime)}
         <label>End:</label>
         <input
           name="endTime"
@@ -134,8 +134,8 @@ export default class Create extends Component {
           onBlur={this.handleBlur('endTime')}
           disabled={allDay}
         />
-        {this.handleFieldErrorMessage('endTime', endTime)}
-        {this.handleDatesErrorMessage(startTime, endTime)}
+        {this.renderFieldErrorMessage('endTime', endTime)}
+        {this.renderDatesErrorMessage(startTime, endTime)}
         <button
           onClick={this.handleSubmit}
           disabled={formErrorHandler(

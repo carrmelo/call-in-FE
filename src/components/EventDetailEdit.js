@@ -46,7 +46,7 @@ export default class EventDetailEdit extends Component {
     this.props.eventStore.resetEvent();
   };
 
-  handleFieldErrorMessage = (inputProperty, field) => {
+  renderFieldErrorMessage = (inputProperty, field) => {
     return (
       this.state.touched[inputProperty] &&
       formRequiredFieldHandler(field) && (
@@ -55,7 +55,7 @@ export default class EventDetailEdit extends Component {
     );
   };
 
-  handleDatesErrorMessage = (startTime, endTime) => {
+  renderDatesErrorMessage = (startTime, endTime) => {
     return (
       (this.state.touched['startTime'] || this.state.touched['endTime']) &&
       formDatesHander(startTime, endTime) && (
@@ -115,7 +115,7 @@ export default class EventDetailEdit extends Component {
             onChange={this.handleChange}
             onBlur={this.handleBlur('title')}
           />
-          {this.handleFieldErrorMessage('title', title)}
+          {this.renderFieldErrorMessage('title', title)}
           <input
             name="description"
             value={description}
@@ -142,8 +142,8 @@ export default class EventDetailEdit extends Component {
             onBlur={this.handleBlur('endTime')}
             disabled={allDay}
           />
-          {this.handleFieldErrorMessage('endTime', endTime)}
-          {this.handleDatesErrorMessage(startTime, endTime)}
+          {this.renderFieldErrorMessage('endTime', endTime)}
+          {this.renderDatesErrorMessage(startTime, endTime)}
         </div>
         <div className="event_detail_buttons__container">
           <Link to={eventId ? `/${eventId}` : '/'}>
