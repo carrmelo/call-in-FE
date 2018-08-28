@@ -35,8 +35,8 @@ export default class Create extends Component {
 
   toggleLocalAllDay = () => {
     this.props.eventStore.toggleAllDay();
-    const { allDay, startTime, setEndTime } = this.props.eventStore;
-    if (allDay) setEndTime(startTime);
+    const { allDay, startTime } = this.props.eventStore;
+    if (allDay) this.props.eventStore.setEndTime(startTime);
   };
 
   handleSubmit = e => {

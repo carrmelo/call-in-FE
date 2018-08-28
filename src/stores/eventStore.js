@@ -95,11 +95,15 @@ export class EventStore {
 
   @action
   setEndTime(endTime) {
+    console.log('endtime', this);
+    
     this.endTime = endTime;
   }
 
   @action
   toggleAllDay() {
+    console.log('togle', this);
+    
     this.allDay = !this.allDay;
   }
 
