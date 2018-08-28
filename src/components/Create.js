@@ -25,18 +25,13 @@ export default class Create extends Component {
     });
   };
 
-  handleChangeTitle = e => this.props.eventStore.setTitle(e.target.value);
+  handleChange = e =>
+    this.props.eventStore.setEventProperty(e.target.name, e.target.value);
 
-  handleChangeDescription = e => this.props.eventStore.setDescription(e.target.value);
-
-  handleChangeStartTime = e => this.props.eventStore.setStartTime(e.target.value);
-
-  handleChangeEndTime = e => this.props.eventStore.setEndTime(e.target.value);
-
-  toggleLocalAllDay = () => {
+  toggleComponentAllDay = () => {
     this.props.eventStore.toggleAllDay();
     const { allDay, startTime } = this.props.eventStore;
-    if (allDay) this.props.eventStore.setEndTime(startTime);
+    if (allDay) this.props.eventStore.setEventProperty('endTime', startTime);
   };
 
   handleSubmit = e => {
@@ -81,7 +76,7 @@ export default class Create extends Component {
             name="allDay"
             value="allDay"
             checked={allDay}
-            onChange={this.toggleLocalAllDay}
+            onChange={this.toggleComponentAllDay}
           />
           <label>All day</label>
         </div>
@@ -106,7 +101,7 @@ export default class Create extends Component {
           value={title}
           type="text"
           placeholder="Title"
-          onChange={this.handleChangeTitle}
+          onChange={this.handleChange}
           onBlur={this.handleBlur('title')}
         />
         {this.handleFieldErrorMessage('title', title)}
@@ -116,7 +111,7 @@ export default class Create extends Component {
           value={description}
           type="text"
           placeholder="Description"
-          onChange={this.handleChangeDescription}
+          onChange={this.handleChange}
         />
         <label>Start:</label>
         <div className="allDay">
@@ -124,7 +119,7 @@ export default class Create extends Component {
             name="startTime"
             value={startTime}
             type="datetime-local"
-            onChange={this.handleChangeStartTime}
+            onChange={this.handleChange}
             onBlur={this.handleBlur('startTime')}
           />
           {this.renderAllDay()}
@@ -135,7 +130,7 @@ export default class Create extends Component {
           name="endTime"
           value={endTime}
           type="datetime-local"
-          onChange={this.handleChangeEndTime}
+          onChange={this.handleChange}
           onBlur={this.handleBlur('endTime')}
           disabled={allDay}
         />

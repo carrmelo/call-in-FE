@@ -78,27 +78,33 @@ export class EventStore {
     this.allDay = false;
   }
 
-  @action
-  setTitle(title) {
-    this.title = title;
-  }
 
   @action
-  setDescription(description) {
-    this.description = description;
+  setEventProperty(name, value) {
+    this[name] = value;
   }
 
-  @action
-  setStartTime(startTime) {
-    this.startTime = startTime;
-  }
+  // @action
+  // setTitle(title) {
+  //   this.title = title;
+  // }
 
-  @action
-  setEndTime(endTime) {
-    console.log('endtime', this);
+  // @action
+  // setDescription(description) {
+  //   this.description = description;
+  // }
+
+  // @action
+  // setStartTime(startTime) {
+  //   this.startTime = startTime;
+  // }
+
+  // @action
+  // setEndTime(endTime) {
+  //   console.log('endtime', this);
     
-    this.endTime = endTime;
-  }
+  //   this.endTime = endTime;
+  // }
 
   @action
   toggleAllDay() {
