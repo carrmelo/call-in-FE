@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
-import { Link } from 'react-router-dom';
 import moment from 'moment';
 
 import './EventDetail.css';
@@ -31,11 +30,9 @@ export default class EventDetail extends Component {
     this.props.eventStore.resetEvent();
   };
 
-  handleEditButton =() => {
-    // const { eventId } = this.props.match.params;
-    // this.props.eventStore.set_id(eventId)
+  handleEditButton = () => {
     this.props.history.push('/editor');
-  }
+  };
 
   handleDeleteButton = () => {
     const { eventId } = this.props.match.params;
@@ -71,24 +68,11 @@ export default class EventDetail extends Component {
           <p>until {momentEndTime}</p>
         </div>
         <div className="event_detail_buttons__container">
-          {/* <Link
-            to={{
-              pathname: `/editor`,
-              state: {
-                id: eventId,
-                title,
-                description,
-                startTime,
-                endTime
-              }
-            }}
-          > */}
-            <button onClick={this.handleEditButton}>
-              <span role="img" aria-labelledby="edit">
-                ✏️
-              </span>
-            </button>
-          {/* </Link> */}
+          <button onClick={this.handleEditButton}>
+            <span role="img" aria-labelledby="edit">
+              ✏️
+            </span>
+          </button>
           <button onClick={this.handleDeleteButton}>
             <span role="img" aria-labelledby="delete">
               🗑

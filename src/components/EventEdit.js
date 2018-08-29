@@ -46,6 +46,10 @@ export default class EventEdit extends Component {
     this.props.eventStore.resetEvent();
   };
 
+  handleCancelButton = () => {
+    this.props.history.push(`/${this.props.eventStore.id}`);
+  };
+
   renderFieldErrorMessage = (inputProperty, field) => {
     return (
       this.state.touched[inputProperty] &&
@@ -62,6 +66,14 @@ export default class EventEdit extends Component {
         <p className="required">
           End date and time should be later than start date and time
         </p>
+      )
+    );
+  };
+
+  renderCancelButton = () => {
+    return (
+      this.props.eventStore.id && (
+        <button onClick={this.handleCancelButton}>Cancel</button>
       )
     );
   };
@@ -144,20 +156,20 @@ export default class EventEdit extends Component {
         />
         {this.renderFieldErrorMessage('endTime', endTime)}
         {this.renderDatesErrorMessage(startTime, endTime)}
-        <Link to={id ? `/${id}` : '/'}>
-          <button>Cancel</button>
-        </Link>
-        <button
-          onClick={this.handleSubmit}
-          disabled={formErrorHandler(
-            formRequiredFieldHandler(title),
-            formDatesHander(startTime, endTime),
-            formRequiredFieldHandler(startTime),
-            formRequiredFieldHandler(endTime)
-          )}
-        >
-          {id ? 'Update' : 'Submit'}
-        </button>
+        <div className="button_container">
+          {this.renderCancelButton()}
+          <button
+            onClick={this.handleSubmit}
+            disabled={formErrorHandler(
+              formRequiredFieldHandler(title),
+              formDatesHander(startTime, endTime),
+              formRequiredFieldHandler(startTime),
+              formRequiredFieldHandler(endTime)
+            )}
+          >
+            {id ? 'Update' : 'Submit'}
+          </button>
+        </div>
       </form>
     );
   }

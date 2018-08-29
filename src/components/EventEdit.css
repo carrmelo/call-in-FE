@@ -40,3 +40,8 @@ button {
 .allDay {
   display: flex;
 }
+
+.button_container {
+  display: flex;
+  justify-content: center;
+}
