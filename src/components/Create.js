@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
+import { Link } from 'react-router-dom';
 
 import {
   formErrorHandler,
@@ -85,7 +86,13 @@ export default class Create extends Component {
   };
 
   render() {
-    const { title, description, startTime, endTime } = this.props.eventStore;
+    const {
+      id,
+      title,
+      description,
+      startTime,
+      endTime
+    } = this.props.eventStore;
     let { allDay } = this.props.eventStore;
 
     return (
@@ -95,29 +102,30 @@ export default class Create extends Component {
             ✖️
           </span>
         </button>
+        <h1>{id ? 'Update Event' : 'Create Event'}</h1>
         <label>Title:</label>
         <input
           name="title"
           value={title}
           type="text"
-          placeholder="Title"
+          placeholder={id ? title : 'Title'}
           onChange={this.handleChange}
           onBlur={this.handleBlur('title')}
         />
-        {this.handleFieldErrorMessage('title', title)}
+        {this.renderFieldErrorMessage('title', title)}
         <label>Description:</label>
         <input
           name="description"
           value={description}
           type="text"
-          placeholder="Description"
+          placeholder={id ? description : 'Description'}
           onChange={this.handleChange}
         />
         <label>Start:</label>
         <div className="allDay">
           <input
             name="startTime"
-            value={startTime}
+            value={startTime.substring(0, 16)}
             type="datetime-local"
             onChange={this.handleChange}
             onBlur={this.handleBlur('startTime')}
@@ -128,7 +136,7 @@ export default class Create extends Component {
         <label>End:</label>
         <input
           name="endTime"
-          value={endTime}
+          value={endTime.substring(0, 16)}
           type="datetime-local"
           onChange={this.handleChange}
           onBlur={this.handleBlur('endTime')}
@@ -136,6 +144,9 @@ export default class Create extends Component {
         />
         {this.renderFieldErrorMessage('endTime', endTime)}
         {this.renderDatesErrorMessage(startTime, endTime)}
+        <Link to={id ? `/${id}` : '/'}>
+          <button>Cancel</button>
+        </Link>
         <button
           onClick={this.handleSubmit}
           disabled={formErrorHandler(
@@ -145,7 +156,7 @@ export default class Create extends Component {
             formRequiredFieldHandler(endTime)
           )}
         >
-          Submit
+          {id ? 'Update' : 'Submit'}
         </button>
       </form>
     );
