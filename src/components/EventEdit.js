@@ -7,11 +7,11 @@ import {
   formRequiredFieldHandler,
   formDatesHander
 } from '../helpers/formErrorHandler';
-import './Create.css';
+import './EventEdit.css';
 
 @inject('eventStore')
 @observer
-export default class Create extends Component {
+export default class EventEdit extends Component {
   state = {
     touched: {
       title: false,

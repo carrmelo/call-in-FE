@@ -19,7 +19,7 @@ export default class CalendarEvents extends Component {
 
   handleSelect = ({ start, end }) => {
     this.props.eventStore.loadStartAndEndTime(start, end);
-    this.props.history.push('/create');
+    this.props.history.push('/editor');
   };
 
   handleSelectEvent = ({ id }) => {

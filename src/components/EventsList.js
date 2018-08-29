@@ -15,15 +15,13 @@ export default class EventsList extends Component {
   }
 
   renderPendingEventItem() {
-    const {events} = this.props.calendarStore;
-
-    return events.length ? (
-      events
-        .slice()
-        .filter(event => {
-          const filterPending = toCorrectDate(new Date(Date.now()));
-          return event.endTime > filterPending;
-        })
+    const { events } = this.props.calendarStore;
+    const nextEvents = events.slice().filter(event => {
+      const filterPending = toCorrectDate(new Date(Date.now()));
+      return event.endTime > filterPending;
+    });
+    return nextEvents.length ? (
+      nextEvents
         .sort((a, b) => {
           const c = new Date(a.startTime);
           const d = new Date(b.startTime);
@@ -41,7 +39,7 @@ export default class EventsList extends Component {
         <h1>Next Events:</h1>
         <div className="event_list__container">
           {this.renderPendingEventItem()}
-          <Link to={'create'}>
+          <Link to={'/editor'}>
             <button>+</button>
           </Link>
         </div>

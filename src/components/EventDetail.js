@@ -31,6 +31,12 @@ export default class EventDetail extends Component {
     this.props.eventStore.resetEvent();
   };
 
+  handleEditButton =() => {
+    // const { eventId } = this.props.match.params;
+    // this.props.eventStore.set_id(eventId)
+    this.props.history.push('/editor');
+  }
+
   handleDeleteButton = () => {
     const { eventId } = this.props.match.params;
     this.props.calendarStore.deleteEvent(eventId);
@@ -38,7 +44,6 @@ export default class EventDetail extends Component {
   };
 
   render() {
-    const { eventId } = this.props.match.params;
     const { title, description, startTime, endTime } = this.props.eventStore;
 
     const momentStartTime = moment(startTime).format('DD-MM-YYYY HH:mm');
@@ -66,9 +71,9 @@ export default class EventDetail extends Component {
           <p>until {momentEndTime}</p>
         </div>
         <div className="event_detail_buttons__container">
-          <Link
+          {/* <Link
             to={{
-              pathname: `/edit/${eventId}`,
+              pathname: `/editor`,
               state: {
                 id: eventId,
                 title,
@@ -77,13 +82,13 @@ export default class EventDetail extends Component {
                 endTime
               }
             }}
-          >
-            <button>
+          > */}
+            <button onClick={this.handleEditButton}>
               <span role="img" aria-labelledby="edit">
                 ✏️
               </span>
             </button>
-          </Link>
+          {/* </Link> */}
           <button onClick={this.handleDeleteButton}>
             <span role="img" aria-labelledby="delete">
               🗑

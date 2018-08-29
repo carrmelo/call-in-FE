@@ -20,7 +20,8 @@ function EventItem({ event }) {
     >
       <button>{event.title}</button>
       <p className="item_date">
-        {moment(event.startTime).format('DD-MM-YYYY')}
+        from {moment(event.startTime).format('DD-MM-YYYY')}<br/>
+        to {moment(event.endTime).format('DD-MM-YYYY')}
       </p>
     </Link>
   );
