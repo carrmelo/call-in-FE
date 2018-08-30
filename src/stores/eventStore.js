@@ -1,3 +1,5 @@
+// @flow
+
 import { observable, action } from 'mobx';
 
 import calendarStore from './calendarStore';

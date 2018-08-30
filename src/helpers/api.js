@@ -1,3 +1,5 @@
+// @flow
+
 export const apiFetch = requestOptions => {
   const { url, method, body } = requestOptions;
   return fetch(url, {

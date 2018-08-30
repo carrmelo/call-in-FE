@@ -1,3 +1,5 @@
+// @flow
+
 export const formRequiredFieldHandler = field => (!field ? true : false);
 
 export const formDatesHander = (startTime, endTime) => startTime > endTime;
