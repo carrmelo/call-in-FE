@@ -31,7 +31,6 @@ export default class CalendarEvents extends Component {
       <div className="calendar__container">
         <BigCalendar
           selectable
-          culture="en-GB"
           localizer={localizer}
           startAccessor={event => new Date(event.startTime)}
           endAccessor={event => new Date(event.endTime)}

@@ -7,6 +7,7 @@ import {
   formDatesHander
 } from '../helpers/formErrorHandler';
 import './EventEdit.css';
+import { toCorrectDate } from '../helpers/correctDateTime';
 
 @inject('eventStore')
 @observer
@@ -105,7 +106,7 @@ export default class EventEdit extends Component {
       endTime
     } = this.props.eventStore;
     let { allDay } = this.props.eventStore;
-
+    
     return (
       <form className="create_form_container">
         <button className="create__close" onClick={this.handleCloseButton}>
@@ -136,7 +137,7 @@ export default class EventEdit extends Component {
         <div className="allDay">
           <input
             name="startTime"
-            value={startTime.substring(0, 16)}
+            value={toCorrectDate(new Date (startTime)).substring(0, 16)}
             type="datetime-local"
             onChange={this.handleChange}
             onBlur={this.handleBlur('startTime')}
@@ -147,7 +148,7 @@ export default class EventEdit extends Component {
         <label>End:</label>
         <input
           name="endTime"
-          value={endTime.substring(0, 16)}
+          value={toCorrectDate(new Date (endTime)).substring(0, 16)}
           type="datetime-local"
           onChange={this.handleChange}
           onBlur={this.handleBlur('endTime')}

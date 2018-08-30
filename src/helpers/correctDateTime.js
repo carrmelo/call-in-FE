@@ -1,13 +1,13 @@
 export const toCorrectDate = date => {
-  var tzo = date.getTimezoneOffset(),
-    dif = tzo >= 0 ? '+' : '-',
+  const timeZone = date.getTimezoneOffset(),
+    dif = timeZone >= 0 ? '+' : '-',
     pad = function(num) {
-      var norm = Math.floor(Math.abs(num));
+      const norm = Math.floor(Math.abs(num));
       return (norm < 10 ? '0' : '') + norm;
     };
   return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(
     date.getDate()
   )}T${pad(date.getHours())}:${pad(date.getMinutes())}:${pad(
     date.getSeconds()
-  )}${dif}${pad(tzo / 60)}:${pad(tzo % 60)}`;
+  )}${dif}${pad(timeZone / 60)}:${pad(timeZone % 60)}`;
 };

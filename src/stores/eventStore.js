@@ -36,8 +36,7 @@ export class EventStore {
 
   @action
   loadInitialData() {
-    if (!this.id) return this.resetEvent();
-    else return this.loadEvent(this.id);
+    return !this.id ? this.resetEvent() : this.loadEvent(this.id);
   }
 
   @action
