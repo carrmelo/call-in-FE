@@ -6,8 +6,10 @@ import { apiFetch, apiError } from '../helpers/api';
 import eventStore from './eventStore';
 
 export class CalendarStore {
-  @observable isLoading = false;
-  @observable eventsMap = observable.map();
+  @observable
+  isLoading = false;
+  @observable
+  eventsMap = observable.map();
 
   @computed
   get events() {
@@ -26,7 +28,10 @@ export class CalendarStore {
           this.isLoading = false;
         })
       )
-      .catch(error => apiError(error));
+      .catch(error => {
+        console.error('---------', error);
+        this.isLoading = false;
+      });
   }
 
   @action
@@ -46,7 +51,10 @@ export class CalendarStore {
           return event;
         })
       )
-      .catch(error => apiError(error));
+      .catch(error => {
+        console.error('---------', error);
+        this.isLoading = false;
+      });
   }
 
   @action
@@ -66,7 +74,10 @@ export class CalendarStore {
           return event;
         })
       )
-      .catch(error => apiError(error));
+      .catch(error => {
+        console.error('---------', error);
+        this.isLoading = false;
+      });
   }
 
   @action
@@ -86,7 +97,10 @@ export class CalendarStore {
           return true;
         })
       )
-      .catch(error => apiError(error));
+      .catch(error => {
+        console.error('---------', error);
+        this.isLoading = false;
+      });
   }
 }
 

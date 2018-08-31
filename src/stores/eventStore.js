@@ -16,8 +16,8 @@ export class EventStore {
   @observable endTime = '';
   @observable allDay = false;
 
-  getEvent(event_id) {
-    const event = calendarStore.eventsMap.get(+event_id);
+  getEvent(event_id: number) {
+    const event = calendarStore.eventsMap.get(event_id);
     if (event) {
       this.id = event.id;
       this.title = event.title;
@@ -29,7 +29,7 @@ export class EventStore {
   }
 
   @action
-  set_id(event_id) {
+  set_id(event_id: string) {
     if (this.id !== event_id) {
       this.resetEvent();
       this.id = event_id;
@@ -42,13 +42,13 @@ export class EventStore {
   }
 
   @action
-  loadStartAndEndTime(start, end) {
+  loadStartAndEndTime(start: Date, end: Date) {
     this.startTime = toCorrectDate(start).substring(0, 16);
     this.endTime = toCorrectDate(end).substring(0, 16);
   }
 
   @action
-  loadEvent(id) {
+  loadEvent(id: string) {
     const event = this.getEvent(+id);
     if (!event) {
       this.isLoading = true;
@@ -65,7 +65,10 @@ export class EventStore {
             this.isLoading = false;
           })
         )
-        .catch(error => apiError(error));
+        .catch(error => {
+          console.error('---------', error);
+          this.isLoading = false;
+        });
     } else return event;
   }
 
@@ -80,7 +83,7 @@ export class EventStore {
   }
 
   @action
-  setEventProperty(name, value) {
+  setEventProperty(name: string, value: string) {
     this[name] = value;
   }
 
