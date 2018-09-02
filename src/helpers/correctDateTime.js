@@ -1,7 +1,9 @@
-export const toCorrectDate = date => {
+// @flow
+
+export const toCorrectDate = (date: Date): string => {
   const timeZone = date.getTimezoneOffset(),
     dif = timeZone >= 0 ? '+' : '-',
-    pad = function(num) {
+    pad = function(num: number): string {
       const norm = Math.floor(Math.abs(num));
       return (norm < 10 ? '0' : '') + norm;
     };
