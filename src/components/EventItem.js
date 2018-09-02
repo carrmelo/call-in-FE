@@ -1,10 +1,23 @@
+// @flow
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
 
 import './EventItem.css';
 
-function EventItem({ event }) {
+type Props = {
+  event: {
+    id: number,
+    title: string,
+    description: string,
+    startTime: string,
+    endTime: string
+  }
+};
+
+function EventItem(props: Props) {
+  const { event } = props;
   return (
     <Link
       to={{
