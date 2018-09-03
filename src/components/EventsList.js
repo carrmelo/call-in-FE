@@ -1,3 +1,5 @@
+// @flow
+
 import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
 import { Link } from 'react-router-dom';
@@ -7,9 +9,23 @@ import EventItem from './EventItem';
 import './EventList.css';
 import { toCorrectDate } from '../helpers/correctDateTime';
 
+type Props = {
+  calendarStore: {
+    events: Array<{
+      id: number,
+      title: string,
+      description: string,
+      startTime: string,
+      endTime: string,
+      allDay: boolean
+    }>,
+    loadEvents: any
+  }
+}
+
 @inject('calendarStore')
 @observer
-export default class EventsList extends Component {
+export default class EventsList extends Component<Props> {
   componentDidMount() {
     this.props.calendarStore.loadEvents();
   }
