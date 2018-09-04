@@ -1,3 +1,5 @@
+// @flow
+
 import { observable, action } from 'mobx';
 
 import calendarStore from './calendarStore';
@@ -7,12 +9,12 @@ import { toCorrectDate } from '../helpers/correctDateTime';
 export class EventStore {
   @observable isLoading = false;
 
-  @observable id = '';
-  @observable title = '';
-  @observable description = '';
-  @observable startTime = '';
-  @observable endTime = '';
-  @observable allDay = false;
+  @observable id: string = '';
+  @observable title: string = '';
+  @observable description: string = '';
+  @observable startTime: string = '';
+  @observable endTime: string = '';
+  @observable allDay: boolean = false;
 
   getEvent(event_id: number) {
     const event = calendarStore.eventsMap.get(event_id);

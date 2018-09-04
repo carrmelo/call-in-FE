@@ -4,7 +4,7 @@ export const apiFetch = (requestOptions: {
   url: string,
   method?: string,
   body?: {}
-}): string | Array<{}> | {} => {
+}) => {
   const { url, method, body } = requestOptions;
   return fetch(url, {
     method: method || 'GET',
