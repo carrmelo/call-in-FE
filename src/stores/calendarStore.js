@@ -1,13 +1,15 @@
+// @flow
+
 import { observable, action, computed } from 'mobx';
 
-import { apiFetch, apiError } from '../helpers/api';
+import { apiFetch, /* apiError */ } from '../helpers/api';
 import eventStore from './eventStore';
 
 export class CalendarStore {
-  @observable
-  isLoading = false;
-  @observable
-  eventsMap = observable.map();
+  @observable isLoading: boolean = false;
+  @observable eventsMap = observable.map();
+  url: string =
+    process.env.REACT_APP_API_HOST || 'http://localhost:3000/events';
 
   @computed
   get events() {
@@ -17,7 +19,7 @@ export class CalendarStore {
   @action
   loadEvents() {
     this.isLoading = true;
-    const requestOptions = { url: `${process.env.REACT_APP_API_HOST}` };
+    const requestOptions = { url: `${this.url}` };
     return apiFetch(requestOptions)
       .then(
         action(events => {
@@ -33,10 +35,16 @@ export class CalendarStore {
   }
 
   @action
-  createEvent(event) {
+  createEvent(event: {
+    title: string,
+    description?: string,
+    startTime: string | Date,
+    endtime: string | Date,
+    allDay: boolean
+  }) {
     this.isLoading = true;
     const requestOptions = {
-      url: `${process.env.REACT_APP_API_HOST}`,
+      url: `${this.url}`,
       method: 'POST',
       body: event
     };
@@ -56,10 +64,19 @@ export class CalendarStore {
   }
 
   @action
-  updateEvent(event, id) {
+  updateEvent(
+    event: {
+      title?: string,
+      description?: string,
+      startTime?: string | Date,
+      endtime?: string | Date,
+      allDay?: boolean
+    },
+    id: string
+  ) {
     this.isLoading = true;
     const requestOptions = {
-      url: `${process.env.REACT_APP_API_HOST}/${id}`,
+      url: `${this.url}/${id}`,
       method: 'PUT',
       body: event
     };
@@ -79,10 +96,10 @@ export class CalendarStore {
   }
 
   @action
-  deleteEvent(id) {
+  deleteEvent(id: string) {
     this.isLoading = true;
     const requestOptions = {
-      url: `${process.env.REACT_APP_API_HOST}/${id}`,
+      url: `${this.url}/${id}`,
       method: 'DELETE',
       body: { id }
     };

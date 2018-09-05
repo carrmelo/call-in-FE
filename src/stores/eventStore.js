@@ -15,6 +15,7 @@ export class EventStore {
   @observable startTime: string = '';
   @observable endTime: string = '';
   @observable allDay: boolean = false;
+  url: string = process.env.REACT_APP_API_HOST || 'http://localhost:3000/events';
 
   getEvent(event_id: number) {
     const event = calendarStore.eventsMap.get(event_id);
@@ -52,7 +53,7 @@ export class EventStore {
     const event = this.getEvent(+id);
     if (!event) {
       this.isLoading = true;
-      const requestOptions = { url: `${process.env.REACT_APP_API_HOST}/${id}` };
+      const requestOptions = { url: `${this.url}/${id}` };
       return apiFetch(requestOptions)
         .then(
           action(data => {
