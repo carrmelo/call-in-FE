@@ -36,11 +36,11 @@ export class CalendarStore {
 
   @action
   createEvent(event: {
-    title: string,
+    title?: string,
     description?: string,
-    startTime: string | Date,
-    endtime: string | Date,
-    allDay: boolean
+    startTime?: string | Date,
+    endtime?: string | Date,
+    allDay?: boolean
   }) {
     this.isLoading = true;
     const requestOptions = {

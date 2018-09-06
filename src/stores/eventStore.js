@@ -3,7 +3,7 @@
 import { observable, action } from 'mobx';
 
 import calendarStore from './calendarStore';
-import { apiFetch, apiError } from '../helpers/api';
+import { apiFetch, /* apiError */ } from '../helpers/api';
 import { toCorrectDate } from '../helpers/correctDateTime';
 
 export class EventStore {
