@@ -1,3 +1,5 @@
+// @flow
+
 import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
 
@@ -9,9 +11,35 @@ import {
 import './EventEdit.css';
 import { toCorrectDate } from '../helpers/correctDateTime';
 
+type Props = {
+  eventStore: {
+    id: number,
+    title: string,
+    description: string,
+    startTime: string,
+    endTime: string,
+    allDay: boolean,
+    set_id: any, // <<<<<<<<<<<<research<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+    toggleAllDay: any, // <<<<<<<<<<<<research<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+    setEventProperty: any, // <<<<<<<<<<<<research<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+    submitEvent: any, // <<<<<<<<<<<<research<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+    resetEvent: any // <<<<<<<<<<<<research<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+  },
+  match: any, // <<<<<<<<<<<<research<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+  history: any // <<<<<<<<<<<<research<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+};
+
+type State = {
+  touched: {
+    tittle: boolean,
+    startTime: boolean,
+    endTime: boolean
+  }
+}
+
 @inject('eventStore')
 @observer
-export default class EventEdit extends Component {
+export default class EventEdit extends Component<Props, State> {
   state = {
     touched: {
       title: false,
@@ -20,13 +48,13 @@ export default class EventEdit extends Component {
     }
   };
 
-  handleBlur = field => e => {
+  handleBlur = (field: string) => (e: SyntheticFocusEvent<>) => {
     this.setState({
       touched: { ...this.state.touched, [field]: true }
     });
   };
 
-  handleChange = e =>
+  handleChange = (e: SyntheticInputEvent<>) =>
     this.props.eventStore.setEventProperty(e.target.name, e.target.value);
 
   handleToggleAllDay = () => {
@@ -35,7 +63,7 @@ export default class EventEdit extends Component {
     if (allDay) this.props.eventStore.setEventProperty('endTime', startTime);
   };
 
-  handleSubmit = e => {
+  handleSubmit = (e: SyntheticEvent<>) => {
     e.preventDefault();
     this.props.eventStore.submitEvent();
     this.handleCloseButton();
@@ -50,7 +78,7 @@ export default class EventEdit extends Component {
     this.props.history.push(`/${this.props.eventStore.id}`);
   };
 
-  renderFieldErrorMessage = (inputProperty, field) => {
+  renderFieldErrorMessage = (inputProperty: string, field: string) => {
     return (
       this.state.touched[inputProperty] &&
       formRequiredFieldHandler(field) && (
@@ -59,7 +87,7 @@ export default class EventEdit extends Component {
     );
   };
 
-  renderDatesErrorMessage = (startTime, endTime) => {
+  renderDatesErrorMessage = (startTime: string, endTime: string) => {
     return (
       formDatesHander(startTime, endTime) &&
       this.state.touched['endTime'] && (
