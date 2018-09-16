@@ -19,9 +19,9 @@ type Props = {
       endTime: string,
       allDay: boolean
     }>,
-    loadEvents: any // <<<<<<<<<<<<research<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+    loadEvents: () => Promise<>
   }
-}
+};
 
 @inject('calendarStore')
 @observer

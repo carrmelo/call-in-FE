@@ -16,8 +16,8 @@ type Props = {
       endTime: string,
       allDay: boolean
     }>,
-    loadEvents: any, // <<<<<<<<<<<<research<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-    deleteEvent: any // <<<<<<<<<<<<research<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+    loadEvents: void => Promise<>, 
+    deleteEvent: (id: string) => Promise<> 
   },
   eventStore: {
     id: number,
@@ -26,12 +26,12 @@ type Props = {
     startTime: string,
     endTime: string,
     allDay: boolean,
-    set_id: any, // <<<<<<<<<<<<research<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-    loadEvent: any, // <<<<<<<<<<<<research<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-    resetEvent: any // <<<<<<<<<<<<research<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+    set_id: (event_id: string) => void, 
+    loadEvent: (id: string) => void, 
+    resetEvent: void => void 
   },
-  match: any, // <<<<<<<<<<<<research<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-  history: any // <<<<<<<<<<<<research<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+  match: any, 
+  history: any 
 };
 
 @inject('calendarStore', 'eventStore')

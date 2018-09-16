@@ -19,14 +19,14 @@ type Props = {
     startTime: string,
     endTime: string,
     allDay: boolean,
-    set_id: any, // <<<<<<<<<<<<research<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-    toggleAllDay: any, // <<<<<<<<<<<<research<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-    setEventProperty: any, // <<<<<<<<<<<<research<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-    submitEvent: any, // <<<<<<<<<<<<research<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-    resetEvent: any // <<<<<<<<<<<<research<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+    set_id: (event_id: string) => void,
+    toggleAllDay: void => void,
+    setEventProperty: (name: string, value: string) => void,
+    submitEvent: void => void,
+    resetEvent: void => void
   },
-  match: any, // <<<<<<<<<<<<research<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-  history: any // <<<<<<<<<<<<research<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+  match: any,
+  history: any
 };
 
 type State = {
@@ -35,7 +35,7 @@ type State = {
     startTime: boolean,
     endTime: boolean
   }
-}
+};
 
 @inject('eventStore')
 @observer
@@ -134,7 +134,7 @@ export default class EventEdit extends Component<Props, State> {
       endTime
     } = this.props.eventStore;
     let { allDay } = this.props.eventStore;
-    
+
     return (
       <form className="create_form_container">
         <button className="create__close" onClick={this.handleCloseButton}>
@@ -165,7 +165,7 @@ export default class EventEdit extends Component<Props, State> {
         <div className="allDay">
           <input
             name="startTime"
-            value={toCorrectDate(new Date (startTime)).substring(0, 16)}
+            value={toCorrectDate(new Date(startTime)).substring(0, 16)}
             type="datetime-local"
             onChange={this.handleChange}
             onBlur={this.handleBlur('startTime')}
@@ -176,7 +176,7 @@ export default class EventEdit extends Component<Props, State> {
         <label>End:</label>
         <input
           name="endTime"
-          value={toCorrectDate(new Date (endTime)).substring(0, 16)}
+          value={toCorrectDate(new Date(endTime)).substring(0, 16)}
           type="datetime-local"
           onChange={this.handleChange}
           onBlur={this.handleBlur('endTime')}

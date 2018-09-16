@@ -8,7 +8,7 @@ import { toCorrectDate } from '../helpers/correctDateTime';
 
 export class EventStore {
   @observable isLoading = false;
-
+  
   @observable id: string = '';
   @observable title: string = '';
   @observable description: string = '';
