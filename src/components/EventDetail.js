@@ -1,12 +1,42 @@
+// @flow
+
 import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
 import moment from 'moment';
 
 import './EventDetail.css';
 
+type Props = {
+  calendarStore: {
+    events: Array<{
+      id: number,
+      title: string,
+      description: string,
+      startTime: string,
+      endTime: string,
+      allDay: boolean
+    }>,
+    loadEvents: any, // <<<<<<<<<<<<research<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+    deleteEvent: any // <<<<<<<<<<<<research<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+  },
+  eventStore: {
+    id: number,
+    title: string,
+    description: string,
+    startTime: string,
+    endTime: string,
+    allDay: boolean,
+    set_id: any, // <<<<<<<<<<<<research<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+    loadEvent: any, // <<<<<<<<<<<<research<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+    resetEvent: any // <<<<<<<<<<<<research<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+  },
+  match: any, // <<<<<<<<<<<<research<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+  history: any // <<<<<<<<<<<<research<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+};
+
 @inject('calendarStore', 'eventStore')
 @observer
-export default class EventDetail extends Component {
+export default class EventDetail extends Component<Props> {
   componentWillMount() {
     const { eventId } = this.props.match.params;
     this.props.eventStore.set_id(eventId);
@@ -17,7 +47,7 @@ export default class EventDetail extends Component {
     this.props.eventStore.loadEvent(eventId);
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps: any) {
     const { eventId } = this.props.match.params;
     if (eventId !== prevProps.match.params.eventId) {
       this.props.eventStore.set_id(eventId);
@@ -46,7 +76,7 @@ export default class EventDetail extends Component {
     const momentStartTime = moment(startTime).format('DD-MM-YYYY HH:mm');
     const momentEndTime = moment(endTime).format('DD-MM-YYYY HH:mm');
     const momentReferencialStartTime =
-      startTime < Date.now
+      Date.parse(startTime) < Date.now()
         ? moment(startTime).fromNow()
         : moment(endTime).toNow();
 
